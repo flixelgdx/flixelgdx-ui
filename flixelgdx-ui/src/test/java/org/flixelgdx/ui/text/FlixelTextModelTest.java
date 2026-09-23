@@ -460,4 +460,34 @@ class FlixelTextModelTest {
     assertTrue(model.type('\n'));
     assertEquals("\n", model.getText().toString());
   }
+
+  @Test
+  void deleteWord_backwardRemovesPreviousWord() {
+    model.insert("hello world");
+    assertTrue(model.deleteWord(-1));
+    assertEquals("hello ", model.getText().toString());
+    assertEquals(6, model.getCaret());
+    assertTrue(model.deleteWord(-1));
+    assertEquals("", model.getText().toString());
+    assertFalse(model.deleteWord(-1));
+  }
+
+  @Test
+  void deleteWord_forwardRemovesNextWord() {
+    model.insert("hello world");
+    model.setCaret(5);
+    assertTrue(model.deleteWord(1));
+    assertEquals("hello", model.getText().toString());
+    assertEquals(5, model.getCaret());
+    assertFalse(model.deleteWord(1));
+  }
+
+  @Test
+  void deleteWord_deletesSelectionFirst() {
+    model.insert("hello world");
+    model.select(0, 2);
+    assertTrue(model.deleteWord(-1));
+    assertEquals("llo world", model.getText().toString());
+    assertEquals(0, model.getCaret());
+  }
 }

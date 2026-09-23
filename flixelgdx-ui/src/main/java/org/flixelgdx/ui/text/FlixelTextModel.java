@@ -257,6 +257,33 @@ public final class FlixelTextModel {
   }
 
   /**
+   * Deletes from the caret to the previous or next word boundary, or the whole selection if one
+   * exists.
+   *
+   * <p>This is what Ctrl+Backspace (direction {@code -1}) and Ctrl+Delete (direction {@code 1}) do
+   * in most text editors. The boundary is the same one {@link #moveCaretWord(int, boolean)} jumps
+   * to, so deleting backward from the end of {@code "hello world"} leaves {@code "hello "}.
+   *
+   * @param direction Negative to delete toward the start, positive to delete toward the end.
+   * @return {@code true} when the text changed.
+   */
+  public boolean deleteWord(int direction) {
+    if (hasSelection()) {
+      return deleteSelection();
+    }
+    int target = direction >= 0 ? wordRight(caret) : wordLeft(caret);
+    if (target == caret) {
+      return false;
+    }
+    int start = Math.min(caret, target);
+    buffer.delete(start, Math.max(caret, target));
+    caret = start;
+    anchor = start;
+    version++;
+    return true;
+  }
+
+  /**
    * Deletes the selected range and moves the caret to the selection start.
    *
    * <p>Does nothing when there is no selection.

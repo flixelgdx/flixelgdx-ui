@@ -466,6 +466,24 @@ public class FlixelTextBox extends FlixelUiWidget implements FlixelKeyboardListe
   }
 
   /**
+   * Deletes from the caret to the previous or next word boundary, or the selection if one exists.
+   *
+   * <p>The built-in keyboard handling calls this for Ctrl+Backspace and Ctrl+Delete. A game that
+   * drives the box itself (for example from a gamepad on-screen keyboard) can call it directly.
+   *
+   * @param direction Negative to delete toward the start, positive to delete toward the end.
+   * @return {@code true} when the text changed.
+   */
+  public boolean deleteWord(int direction) {
+    if (!isEnabled()) {
+      return false;
+    }
+    boolean changed = model.deleteWord(direction);
+    afterEdit();
+    return changed;
+  }
+
+  /**
    * Moves the caret by the given number of positions, collapsing any selection.
    *
    * @param delta Negative for left, positive for right.
@@ -873,8 +891,20 @@ public class FlixelTextBox extends FlixelUiWidget implements FlixelKeyboardListe
         || Flixel.input.isKeyPressed(FlixelKey.CONTROL_RIGHT);
 
     switch (keycode) {
-      case FlixelKey.BACKSPACE -> backspace();
-      case FlixelKey.FORWARD_DEL -> deleteForward();
+      case FlixelKey.BACKSPACE -> {
+        if (ctrl) {
+          deleteWord(-1);
+        } else {
+          backspace();
+        }
+      }
+      case FlixelKey.FORWARD_DEL -> {
+        if (ctrl) {
+          deleteWord(1);
+        } else {
+          deleteForward();
+        }
+      }
       case FlixelKey.LEFT -> {
         if (ctrl) {
           moveCaretWord(-1, shift);

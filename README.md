@@ -527,6 +527,9 @@ if (Flixel.mouse.justPressed(FlixelMouseButton.LEFT)) {
 operations. `FlixelTextBox.keyDown()` already handles them through the keyboard listener, so you only need to
 call them manually when driving the box without the keyboard listener (for example, from a context menu).
 
+**Word editing.** With the keyboard listener registered, Ctrl+Left and Ctrl+Right jump by word, and
+Ctrl+Backspace and Ctrl+Delete delete a whole word through `deleteWord(-1)` and `deleteWord(1)`.
+
 **Built-in filters.** `FlixelTextFilter.DIGITS`, `FlixelTextFilter.ALPHANUMERIC`,
 `FlixelTextFilter.ASCII_PRINTABLE`, and the always-accept default. Implement the interface for anything else:
 
