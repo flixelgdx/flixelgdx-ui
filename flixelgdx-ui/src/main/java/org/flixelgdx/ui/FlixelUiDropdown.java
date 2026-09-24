@@ -190,6 +190,12 @@ public class FlixelUiDropdown extends FlixelUiWidget {
     }
   }
 
+  /** Opens or closes the list when a {@link FlixelUiPointer} presses and releases on the field. */
+  @Override
+  protected void onActivate(float x, float y) {
+    toggle();
+  }
+
   @Override
   protected void onMeasure() {
     FlixelUiDropdownStyle s = style;

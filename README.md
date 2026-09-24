@@ -59,6 +59,22 @@ public void update(float elapsed) {
 }
 ```
 
+Writing that glue for every widget type gets old fast, so there's an optional `FlixelUiPointer` that does it for
+you. You still read the input, and the pointer turns it into hover, press, click, tooltip, dropdown and scroll calls:
+
+```java
+pointer = new FlixelUiPointer(ui); // In create().
+
+// In update():
+pointer.move(Flixel.mouse.getWorldX(ui.getCamera()), Flixel.mouse.getWorldY(ui.getCamera()));
+if (Flixel.mouse.justPressed(FlixelMouseButton.LEFT)) pointer.down();
+if (Flixel.mouse.justReleased(FlixelMouseButton.LEFT)) pointer.up();
+pointer.scroll(Flixel.mouse.getScrollDeltaY());
+```
+
+Because the game feeds it, the same pointer works with a touch screen or a gamepad-driven cursor. Custom widgets can
+react to it by overriding `onActivate(x, y)` and `onScroll(amount)`.
+
 ### Skins
 
 A skin is a collection of styles, one for each widget type. Load your art once, and every widget dresses itself

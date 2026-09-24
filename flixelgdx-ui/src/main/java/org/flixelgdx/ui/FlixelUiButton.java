@@ -237,6 +237,12 @@ public class FlixelUiButton extends FlixelUiWidget {
     onClick.dispatch(this);
   }
 
+  /** Clicks the button when a {@link FlixelUiPointer} presses and releases on it. */
+  @Override
+  protected void onActivate(float x, float y) {
+    click();
+  }
+
   /**
    * Resolves this button's style from the skin, unless a style object was set directly, and
    * applies its font settings.

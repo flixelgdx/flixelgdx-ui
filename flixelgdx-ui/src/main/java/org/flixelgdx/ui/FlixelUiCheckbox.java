@@ -147,6 +147,12 @@ public class FlixelUiCheckbox extends FlixelUiAbstractToggle {
     click();
   }
 
+  /** Toggles the checkbox when a {@link FlixelUiPointer} presses and releases on it. */
+  @Override
+  protected void onActivate(float x, float y) {
+    click();
+  }
+
   /**
    * Sets the checked state and fires {@link #onChange} when the value changes.
    *

@@ -411,6 +411,23 @@ public class FlixelTextBox extends FlixelUiWidget implements FlixelKeyboardListe
     super.setEnabled(enabled);
   }
 
+  /** Takes focus and moves the caret to the clicked character. */
+  @Override
+  protected void onActivate(float x, float y) {
+    focus();
+    setCaret(getIndexAt(x, y));
+  }
+
+  /** Scrolls a multi-line box by {@code amount} lines; a single-line box passes the scroll on. */
+  @Override
+  protected boolean onScroll(float amount) {
+    if (!model.isMultiLine()) {
+      return false;
+    }
+    scroll(amount);
+    return true;
+  }
+
   /**
    * Inserts one character at the caret, replacing the selection if one exists.
    *

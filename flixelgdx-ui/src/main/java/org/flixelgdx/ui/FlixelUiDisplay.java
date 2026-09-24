@@ -96,8 +96,10 @@ import org.jetbrains.annotations.Nullable;
  * widget is removed, killed, or made invisible. To make a widget show a tooltip, call
  * {@link FlixelUiWidget#setTooltip(CharSequence)} on it.
  *
- * <p>A typical usage pattern: track which widget the cursor is over and show the tooltip after a
- * short pause, mimicking a standard desktop hover tooltip without the display reading input itself.
+ * <p>A {@link FlixelUiPointer} already shows and hides tooltips as the cursor moves, after its
+ * {@link FlixelUiPointer#tooltipDelay}. Games that drive widgets by hand can get the same
+ * desktop-style behavior by tracking which widget the cursor is over and showing the tooltip after
+ * a short pause:
  *
  * <pre>{@code
  * FlixelUiWidget hovered;
@@ -142,6 +144,7 @@ import org.jetbrains.annotations.Nullable;
  * }
  * }</pre>
  *
+ * @see FlixelUiPointer
  * @see FlixelUiWidget
  * @see FlixelUiContainer
  */

@@ -78,6 +78,22 @@ final class FlixelUiDropdownList extends FlixelUiWidget {
     detachPool();
   }
 
+  /** Selects the row under the pointer, which also closes the list. */
+  @Override
+  protected void onActivate(float x, float y) {
+    int index = dropdown.getItemAt(x, y);
+    if (index >= 0) {
+      dropdown.select(index);
+    }
+  }
+
+  /** Scrolls the list by {@code amount} rows. */
+  @Override
+  protected boolean onScroll(float amount) {
+    dropdown.scroll(amount);
+    return true;
+  }
+
   /**
    * Positions and sizes the list relative to the dropdown field now that the root layer has been
    * fully laid out and {@link FlixelUiDropdown#getScreenX()} is up to date.

@@ -596,6 +596,35 @@ public abstract class FlixelUiWidget implements IFlixelBasic, FlixelPositional, 
   protected void onStateChanged() {}
 
   /**
+   * Called by {@link FlixelUiPointer} when a press and release both land on this widget.
+   *
+   * <p>This is the "do your thing" hook: a button clicks, a checkbox toggles, a dropdown opens or
+   * closes, and a text box takes focus and moves its caret. The base widget does nothing, so a
+   * custom widget only overrides it when a pointer click should mean something. Nothing else calls
+   * this method; a game that drives widgets by hand calls the widget's own public methods instead.
+   *
+   * @param x The pointer's X in the display camera's view space.
+   * @param y The pointer's Y in the display camera's view space.
+   */
+  protected void onActivate(float x, float y) {}
+
+  /**
+   * Called by {@link FlixelUiPointer} when the game scrolls while the pointer is over this widget
+   * or one of its descendants.
+   *
+   * <p>Return {@code true} to consume the scroll. When this widget returns {@code false}, the
+   * pointer offers the scroll to the parent next, so a widget nested inside a scrollable one still
+   * lets that ancestor scroll. The base widget never consumes it.
+   *
+   * @param amount How far to scroll, in the widget's own units (for example rows or lines);
+   *     positive values scroll toward the end.
+   * @return {@code true} when this widget used the scroll.
+   */
+  protected boolean onScroll(float amount) {
+    return false;
+  }
+
+  /**
    * Assigns tooltip text to this widget so the game can show it via
    * {@link FlixelUiDisplay#showTooltip(FlixelUiWidget)}.
    *
@@ -603,6 +632,9 @@ public abstract class FlixelUiWidget implements IFlixelBasic, FlixelPositional, 
    * reused buffer can be passed without risk of the tooltip changing later. The string is
    * allocated the first time a non-empty text is set and then reused. Passing {@code null} or an
    * empty sequence clears the tooltip.
+   *
+   * <p>A {@link FlixelUiPointer} shows the tooltip automatically when it hovers the widget. Without
+   * one, the game shows it itself:
    *
    * <pre>{@code
    * playButton.setTooltip("Start the game");

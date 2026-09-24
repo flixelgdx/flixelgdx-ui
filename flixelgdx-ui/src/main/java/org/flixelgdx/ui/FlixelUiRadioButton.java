@@ -158,6 +158,12 @@ public class FlixelUiRadioButton extends FlixelUiAbstractToggle {
     }
   }
 
+  /** Selects this radio button when a {@link FlixelUiPointer} presses and releases on it. */
+  @Override
+  protected void onActivate(float x, float y) {
+    click();
+  }
+
   /**
    * Returns the background for the current state and selected value.
    *
