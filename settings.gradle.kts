@@ -37,10 +37,6 @@ rootProject.name = "flixelgdx-ui"
 
 include("flixelgdx-ui")
 
-// When a sibling framework checkout is present, build against it directly instead of a published
-// artifact. This substitutes `org.flixelgdx:flixelgdx-core` (and any other framework module the
-// composite build resolves, such as `flixelgdx-jvm` for tests) with the local `../flixelgdx`
-// projects by module coordinates, so framework changes are picked up without republishing.
 if (file("../flixelgdx").isDirectory) {
   includeBuild("../flixelgdx")
 }

@@ -40,9 +40,3 @@ idea {
     testOutputDir = file("build/classes/java/test")
   }
 }
-
-tasks.register("javadocAll") {
-  group = "verification"
-  description = "Runs Javadoc (with doclint) on the published Java library module."
-  dependsOn(":flixelgdx-ui:javadoc")
-}
