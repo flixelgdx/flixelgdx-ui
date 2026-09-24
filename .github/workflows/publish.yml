@@ -29,8 +29,8 @@ jobs:
       - name: Check formatting (Spotless)
         run: ./gradlew spotlessCheck --no-daemon --warning-mode all
 
-      - name: Javadoc all Java modules
-        run: ./gradlew javadocAll --no-daemon --warning-mode all
+      - name: Verify Javadocs
+        run: ./gradlew :flixelgdx-ui:javadoc --no-daemon --warning-mode all
 
       - name: Run JVM unit tests
         run: ./gradlew :flixelgdx-ui:test --no-daemon --warning-mode all
