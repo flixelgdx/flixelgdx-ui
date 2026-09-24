@@ -124,7 +124,7 @@ public class FlixelUiModal extends FlixelUiPanel {
   @Nullable
   private FlixelUiModalStyle modalStyle;
 
-  /** Whether {@link #modalStyle} was set with {@link #setStyle(FlixelUiModalStyle)} directly. */
+  /** Whether {@link #modalStyle} was set with {@link #setModalStyle(FlixelUiModalStyle)} directly. */
   private boolean customModalStyle;
 
   /**
@@ -234,6 +234,24 @@ public class FlixelUiModal extends FlixelUiPanel {
   }
 
   /**
+   * Makes this modal use a style object directly, sending a {@link FlixelUiModalStyle} to
+   * {@link #setModalStyle(FlixelUiModalStyle)} so its backdrop applies.
+   *
+   * <p>A plain {@link FlixelUiPanelStyle} is used for the panel only, as on any panel. Passing
+   * {@code null} goes back to the skin's styles.
+   *
+   * @param style The style to use, or {@code null} to use the skin again.
+   */
+  @Override
+  public void setStyle(@Nullable FlixelUiPanelStyle style) {
+    if (style == null || style instanceof FlixelUiModalStyle) {
+      setModalStyle((FlixelUiModalStyle) style);
+      return;
+    }
+    super.setStyle(style);
+  }
+
+  /**
    * Makes this modal use a style object directly instead of looking one up in the skin.
    *
    * <p>Passing {@code null} goes back to the skin's style. The style's backdrop and panel
@@ -242,7 +260,7 @@ public class FlixelUiModal extends FlixelUiPanel {
    *
    * @param style The style to use, or {@code null} to use the skin again.
    */
-  public void setStyle(@Nullable FlixelUiModalStyle style) {
+  public void setModalStyle(@Nullable FlixelUiModalStyle style) {
     customModalStyle = style != null;
     modalStyle = style;
     onStyleChanged();

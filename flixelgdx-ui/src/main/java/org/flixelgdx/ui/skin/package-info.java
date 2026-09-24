@@ -5,7 +5,7 @@
  * public fields for its backgrounds, font file, font size, colors, and padding. A
  * {@link FlixelUiSkin} stores named styles for every style class, such as a {@code "default"} and
  * a {@code "fab"} button style. The skin handed to a {@link FlixelUiDisplay} is where its widgets
- * find their style, by the name set with {@link FlixelUiWidget#setStyle(String)}.
+ * find their style, by the name set with {@link FlixelUiWidget#setStyleName(String)}.
  *
  * <p>The extension ships no built-in skin. A game loads its own images and fonts, fills in the
  * style objects, and adds them to a skin. Backgrounds handed to

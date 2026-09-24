@@ -159,6 +159,36 @@ public class FlixelUiStack extends FlixelUiContainer {
     super.setPercentSize(width, height);
   }
 
+  /**
+   * Sizes the stack's width as a fraction of its parent, turning auto-size off for the width unless
+   * {@code width} is {@code NaN}.
+   *
+   * @param width The fraction of the parent's content width, or {@link Float#NaN} to leave the
+   *     width alone.
+   */
+  @Override
+  public void setPercentWidth(float width) {
+    if (!Float.isNaN(width)) {
+      autoWidth = false;
+    }
+    super.setPercentWidth(width);
+  }
+
+  /**
+   * Sizes the stack's height as a fraction of its parent, turning auto-size off for the height
+   * unless {@code height} is {@code NaN}.
+   *
+   * @param height The fraction of the parent's content height, or {@link Float#NaN} to leave the
+   *     height alone.
+   */
+  @Override
+  public void setPercentHeight(float height) {
+    if (!Float.isNaN(height)) {
+      autoHeight = false;
+    }
+    super.setPercentHeight(height);
+  }
+
   /** Resizes an auto-sized stack to fit its already measured children. */
   @Override
   protected void onMeasure() {
@@ -287,6 +317,15 @@ public class FlixelUiStack extends FlixelUiContainer {
 
   public boolean isAutoHeight() {
     return autoHeight;
+  }
+
+  /**
+   * Returns whether both the width and the height follow the content.
+   *
+   * @return {@code true} unless a fixed width or height was set.
+   */
+  public boolean isAutoSize() {
+    return autoWidth && autoHeight;
   }
 
   /**

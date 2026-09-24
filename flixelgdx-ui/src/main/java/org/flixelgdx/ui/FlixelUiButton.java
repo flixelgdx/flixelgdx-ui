@@ -105,7 +105,7 @@ import org.jetbrains.annotations.Nullable;
  *
  * // In the state:
  * FlixelUiButton fab = new FlixelUiButton(Flixel.files.internal("ui/plus.png"), b -> openCreateDialog());
- * fab.setStyle("fab");
+ * fab.setStyleName("fab");
  * fab.anchor(FlixelAlign.BOTTOM_RIGHT, -24, -24); // 24 pixels in from the bottom-right corner.
  * ui.add(fab);
  * }</pre>
@@ -621,9 +621,10 @@ public class FlixelUiButton extends FlixelUiWidget {
    * <p>The characters are copied, so a reused {@link FlixelString} can be passed every frame
    * without allocating, and nothing happens when the content is the same as before.
    *
-   * @param text The new caption; {@code null} or empty shows no text.
+   * @param text The new caption; an empty sequence shows no text ({@code null} from Java does the
+   *     same).
    */
-  public void setText(@Nullable CharSequence text) {
+  public void setText(@NotNull CharSequence text) {
     if (part.setText(text)) {
       invalidateLayout();
     }
@@ -711,6 +712,15 @@ public class FlixelUiButton extends FlixelUiWidget {
    */
   public boolean isAutoHeight() {
     return autoHeight;
+  }
+
+  /**
+   * Returns whether both the width and the height follow the content.
+   *
+   * @return {@code true} unless a fixed width or height was set.
+   */
+  public boolean isAutoSize() {
+    return autoWidth && autoHeight;
   }
 
   /**

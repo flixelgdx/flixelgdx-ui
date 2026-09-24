@@ -820,9 +820,10 @@ public class FlixelTextBox extends FlixelUiWidget implements FlixelKeyboardListe
   /**
    * Replaces the text content and moves the caret to the end.
    *
-   * @param newText The new text, or {@code null} to clear the buffer.
+   * @param newText The new text; an empty sequence clears the buffer ({@code null} from Java does
+   *     the same).
    */
-  public void setText(@Nullable CharSequence newText) {
+  public void setText(@NotNull CharSequence newText) {
     model.setText(newText);
     afterEdit();
   }
@@ -865,6 +866,87 @@ public class FlixelTextBox extends FlixelUiWidget implements FlixelKeyboardListe
     style = newStyle;
     applyStyleToText();
     invalidateLayout();
+  }
+
+  /**
+   * Returns the style this text box uses.
+   *
+   * @return The style, or {@code null} while the box is not on a display and no style object was
+   *     set.
+   */
+  @Nullable
+  public FlixelTextBoxStyle getStyle() {
+    return style;
+  }
+
+  /**
+   * Returns the placeholder text shown when the buffer is empty.
+   *
+   * @return The placeholder, or {@code null} when none is set.
+   */
+  @Nullable
+  public CharSequence getPlaceholder() {
+    return placeholder != null && !placeholder.isEmpty() ? placeholder : null;
+  }
+
+  /**
+   * Returns the maximum number of code units.
+   *
+   * @return The limit; {@code 0} means unlimited.
+   */
+  public int getMaxLength() {
+    return model.getMaxLength();
+  }
+
+  /**
+   * Returns the character filter set with {@link #setFilter(FlixelTextFilter)}.
+   *
+   * <p>Mirrors the setter: {@code null} means every character is accepted, whether no filter was
+   * set or {@link FlixelTextFilter#ANY} was.
+   *
+   * @return The filter, or {@code null} when every character is accepted.
+   */
+  @Nullable
+  public FlixelTextFilter getFilter() {
+    FlixelTextFilter f = model.getFilter();
+    return f == FlixelTextFilter.ANY ? null : f;
+  }
+
+  public char getPasswordChar() {
+    return passwordChar;
+  }
+
+  public boolean isMultiLine() {
+    return model.isMultiLine();
+  }
+
+  /**
+   * Returns the caret position as a code-unit index into the text.
+   *
+   * @return The caret index.
+   */
+  public int getCaret() {
+    return model.getCaret();
+  }
+
+  /**
+   * Returns where the selection starts; equal to {@link #getSelectionEnd()} when nothing is
+   * selected.
+   *
+   * @return The lower code-unit index of the selection.
+   */
+  public int getSelectionStart() {
+    return model.getSelectionStart();
+  }
+
+  /**
+   * Returns where the selection ends; equal to {@link #getSelectionStart()} when nothing is
+   * selected.
+   *
+   * @return The upper code-unit index of the selection.
+   */
+  public int getSelectionEnd() {
+    return model.getSelectionEnd();
   }
 
   /**

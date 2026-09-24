@@ -275,9 +275,10 @@ public class FlixelUiLabel extends FlixelUiWidget {
    * without allocating. Nothing happens when the content is the same as before, and the layout is
    * only recomputed when the new text changes the label's preferred size.
    *
-   * @param text The new text; {@code null} shows nothing.
+   * @param text The new text; an empty sequence shows nothing ({@code null} from Java does the
+   *     same).
    */
-  public void setText(@Nullable CharSequence text) {
+  public void setText(@NotNull CharSequence text) {
     if (display == null) {
       part.setText(text);
       return;
@@ -387,6 +388,15 @@ public class FlixelUiLabel extends FlixelUiWidget {
    */
   public boolean isAutoHeight() {
     return autoHeight;
+  }
+
+  /**
+   * Returns whether both the width and the height follow the content.
+   *
+   * @return {@code true} unless a fixed width or height was set.
+   */
+  public boolean isAutoSize() {
+    return autoWidth && autoHeight;
   }
 
   /**

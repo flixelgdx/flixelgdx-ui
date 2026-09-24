@@ -144,12 +144,23 @@ abstract class FlixelUiAbstractToggle extends FlixelUiWidget {
   /**
    * Updates the label text; invalidates the layout when the content changes.
    *
-   * @param text The new label; {@code null} or empty shows no text.
+   * @param text The new label; an empty sequence shows no text ({@code null} from Java does the
+   *     same).
    */
-  public void setText(@Nullable CharSequence text) {
+  public void setText(@NotNull CharSequence text) {
     if (part.setText(text)) {
       invalidateLayout();
     }
+  }
+
+  /**
+   * Returns the label text beside the box.
+   *
+   * @return The live text buffer; empty when there is no label.
+   */
+  @NotNull
+  public CharSequence getText() {
+    return part.getBuffer();
   }
 
   /**

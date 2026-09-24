@@ -60,7 +60,7 @@ class FlixelUiHitTestTest {
 
   private static FlixelUiModal modal(float w, float h) {
     FlixelUiModal m = new FlixelUiModal(w, h);
-    m.setStyle(new FlixelUiModalStyle());
+    m.setModalStyle(new FlixelUiModalStyle());
     return m;
   }
 

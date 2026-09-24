@@ -250,7 +250,7 @@ class FlixelUiButtonTest {
     assertNull(button.getStyle());
     ui.add(button);
     assertSame(full, button.getStyle());
-    button.setStyle("fab");
+    button.setStyleName("fab");
     assertSame(fab, button.getStyle());
 
     FlixelUiButtonStyle custom = new FlixelUiButtonStyle();

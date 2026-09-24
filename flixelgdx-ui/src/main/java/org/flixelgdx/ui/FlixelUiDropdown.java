@@ -413,6 +413,16 @@ public class FlixelUiDropdown extends FlixelUiWidget {
   }
 
   /**
+   * Returns the placeholder text shown while nothing is selected.
+   *
+   * @return The placeholder, or {@code null} when none is set.
+   */
+  @Nullable
+  public CharSequence getPlaceholder() {
+    return placeholder != null && !placeholder.isEmpty() ? placeholder : null;
+  }
+
+  /**
    * Returns the index of the selected item, or {@code -1} when nothing is selected.
    *
    * @return The selected index.
@@ -687,7 +697,7 @@ public class FlixelUiDropdown extends FlixelUiWidget {
    * @return The active style.
    */
   @Nullable
-  public FlixelUiDropdownStyle getDropdownStyle() {
+  public FlixelUiDropdownStyle getStyle() {
     return style;
   }
 

@@ -671,7 +671,7 @@ class FlixelUiDropdownTest {
     // the value unchanged, drawing at (0, 0) is correct and the test just
     // verifies modal opens and closes without error.
     FlixelUiModal m = new FlixelUiModal(100, 80);
-    m.setStyle(new org.flixelgdx.ui.skin.FlixelUiModalStyle());
+    m.setModalStyle(new org.flixelgdx.ui.skin.FlixelUiModalStyle());
     ui.openModal(m);
     assertTrue(m.isOpen());
     ui.closeModal(m);

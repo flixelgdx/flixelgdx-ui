@@ -185,7 +185,7 @@ class FlixelUiDisplayTest {
     TestWidget w = new TestWidget(10, 10);
     TestWidget popup = new TestWidget(10, 10);
     FlixelUiModal modal = new FlixelUiModal(10, 10);
-    modal.setStyle(new FlixelUiModalStyle());
+    modal.setModalStyle(new FlixelUiModalStyle());
     ui.add(w);
     ui.getPopupLayer().add(popup);
     ui.openModal(modal);

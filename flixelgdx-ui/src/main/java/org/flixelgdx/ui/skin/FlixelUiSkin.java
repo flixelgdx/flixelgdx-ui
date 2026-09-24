@@ -76,7 +76,7 @@ import org.jetbrains.annotations.Nullable;
  * add(ui);
  *
  * FlixelUiButton plus = new FlixelUiButton(...);
- * plus.setStyle("fab"); // Wears the "fab" button style.
+ * plus.setStyleName("fab"); // Wears the "fab" button style.
  * ui.add(plus);
  * }</pre>
  *

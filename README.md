@@ -99,7 +99,7 @@ FlixelUiDisplay ui = new FlixelUiDisplay(FlixelUiDisplay.createHudCamera(), skin
 add(ui);
 
 FlixelUiButton delete = new FlixelUiButton("Delete Save");
-delete.setStyle("danger");
+delete.setStyleName("danger");
 ```
 
 ### Simple Layouts
@@ -120,7 +120,7 @@ ui.add(menu);
 
 // A floating action button, pinned 24 pixels in from the bottom-right corner.
 FlixelUiButton fab = new FlixelUiButton(Flixel.files.internal("ui/plus.png"), b -> openEditor());
-fab.setStyle("fab");
+fab.setStyleName("fab");
 fab.anchor(FlixelAlign.BOTTOM_RIGHT, -24, -24);
 ui.add(fab);
 ```

@@ -684,7 +684,7 @@ public abstract class FlixelUiWidget implements IFlixelBasic, FlixelPositional, 
   /**
    * Called whenever the style this widget should wear may have changed.
    *
-   * <p>That happens when the widget is attached to a display, when {@link #setStyle(String)} is
+   * <p>That happens when the widget is attached to a display, when {@link #setStyleName(String)} is
    * called while it is attached, and when the display's skin is replaced with
    * {@link FlixelUiDisplay#setSkin(FlixelUiSkin)}. Widgets with a style override it, fetch their
    * style with {@link #resolveStyle(Class)}, and refresh whatever depends on it:
@@ -1236,7 +1236,7 @@ public abstract class FlixelUiWidget implements IFlixelBasic, FlixelPositional, 
    * @throws IllegalArgumentException If {@code name} is {@code null}, or if the widget is on a
    *     display whose skin has no style with that name for this widget.
    */
-  public void setStyle(@NotNull String name) {
+  public void setStyleName(@NotNull String name) {
     if (name == null) {
       throw new IllegalArgumentException("Style name must not be null.");
     }
@@ -1256,12 +1256,45 @@ public abstract class FlixelUiWidget implements IFlixelBasic, FlixelPositional, 
     return anchor;
   }
 
+  /**
+   * Changes the {@link FlixelAlign} anchor while keeping the current offsets.
+   *
+   * <p>Pass {@code 0} to stop anchoring. See {@link #anchor(int, float, float)} for how anchors
+   * work.
+   *
+   * @param align The {@link FlixelAlign} flags to anchor to, or {@code 0} for no anchor.
+   */
+  public void setAnchor(int align) {
+    anchor = align;
+    invalidateLayout();
+  }
+
   public float getAnchorOffsetX() {
     return anchorOffsetX;
   }
 
+  /**
+   * Changes the X offset added to the anchored position, keeping the anchor and the Y offset.
+   *
+   * @param offsetX Pixels added to the anchored X.
+   */
+  public void setAnchorOffsetX(float offsetX) {
+    anchorOffsetX = offsetX;
+    invalidateLayout();
+  }
+
   public float getAnchorOffsetY() {
     return anchorOffsetY;
+  }
+
+  /**
+   * Changes the Y offset added to the anchored position, keeping the anchor and the X offset.
+   *
+   * @param offsetY Pixels added to the anchored Y.
+   */
+  public void setAnchorOffsetY(float offsetY) {
+    anchorOffsetY = offsetY;
+    invalidateLayout();
   }
 
   /**
@@ -1274,12 +1307,40 @@ public abstract class FlixelUiWidget implements IFlixelBasic, FlixelPositional, 
   }
 
   /**
+   * Sizes this widget's width as a fraction of its parent's content width, keeping the percent
+   * height.
+   *
+   * <p>See {@link #setPercentSize(float, float)} for how percent sizes work.
+   *
+   * @param width The fraction of the parent's content width, or {@link Float#NaN} to keep the
+   *     width fixed.
+   */
+  public void setPercentWidth(float width) {
+    percentWidth = width;
+    invalidateLayout();
+  }
+
+  /**
    * Returns the fraction of the parent's content height, or {@code NaN} when the height is fixed.
    *
    * @return The height fraction.
    */
   public float getPercentHeight() {
     return percentHeight;
+  }
+
+  /**
+   * Sizes this widget's height as a fraction of its parent's content height, keeping the percent
+   * width.
+   *
+   * <p>See {@link #setPercentSize(float, float)} for how percent sizes work.
+   *
+   * @param height The fraction of the parent's content height, or {@link Float#NaN} to keep the
+   *     height fixed.
+   */
+  public void setPercentHeight(float height) {
+    percentHeight = height;
+    invalidateLayout();
   }
 
   @Nullable

@@ -1173,7 +1173,17 @@ public class FlixelUiDisplay implements IFlixelBasic {
    * @throws IllegalArgumentException If {@code name} is {@code null}.
    */
   public void setTooltipStyle(@NotNull String name) {
-    tooltip.setStyle(name);
+    tooltip.setStyleName(name);
+  }
+
+  /**
+   * Returns the name of the skin style the tooltip widget uses.
+   *
+   * @return The style name; {@code "default"} unless changed.
+   */
+  @NotNull
+  public String getTooltipStyle() {
+    return tooltip.getStyleName();
   }
 
   /**

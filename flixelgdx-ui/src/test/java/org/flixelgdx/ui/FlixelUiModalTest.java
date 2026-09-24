@@ -66,7 +66,7 @@ class FlixelUiModalTest {
   // Returns a modal ready for use in a skin-less display (no skin entry needed).
   private static FlixelUiModal modal(float w, float h) {
     FlixelUiModal m = new FlixelUiModal(w, h);
-    m.setStyle(new FlixelUiModalStyle());
+    m.setModalStyle(new FlixelUiModalStyle());
     return m;
   }
 

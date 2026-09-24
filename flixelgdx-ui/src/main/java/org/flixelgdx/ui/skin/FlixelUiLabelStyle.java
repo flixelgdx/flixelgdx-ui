@@ -42,7 +42,7 @@ import org.jetbrains.annotations.Nullable;
  * skin.add("title", title);
  *
  * FlixelUiLabel heading = new FlixelUiLabel("Settings");
- * heading.setStyle("title");
+ * heading.setStyleName("title");
  * }</pre>
  *
  * <p>Changing a field after the style is in use does not update labels on its own; call

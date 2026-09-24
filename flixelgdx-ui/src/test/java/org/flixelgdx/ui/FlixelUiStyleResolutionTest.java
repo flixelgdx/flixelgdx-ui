@@ -72,7 +72,7 @@ class FlixelUiStyleResolutionTest {
   void resolvesAChildWhenItsContainerIsAttached() {
     FlixelUiContainer group = new FlixelUiContainer();
     StyledWidget w = new StyledWidget();
-    w.setStyle("fab");
+    w.setStyleName("fab");
     group.add(w);
     assertEquals(0, w.styleChanges);
     ui.add(group);
@@ -84,7 +84,7 @@ class FlixelUiStyleResolutionTest {
   void setStyleWhileAttachedResolvesRightAway() {
     StyledWidget w = new StyledWidget();
     ui.add(w);
-    w.setStyle("fab");
+    w.setStyleName("fab");
     assertEquals(2, w.styleChanges);
     assertSame(fab, w.style);
     assertEquals("fab", w.getStyleName());
@@ -93,14 +93,14 @@ class FlixelUiStyleResolutionTest {
   @Test
   void setStyleWhileDetachedWaitsForAttach() {
     StyledWidget w = new StyledWidget();
-    w.setStyle("fab");
+    w.setStyleName("fab");
     assertEquals(0, w.styleChanges);
     ui.add(w);
     assertEquals(1, w.styleChanges);
     assertSame(fab, w.style);
 
     ui.remove(w);
-    w.setStyle("default");
+    w.setStyleName("default");
     assertEquals(1, w.styleChanges, "a removed widget is no longer on a display");
   }
 
@@ -139,7 +139,7 @@ class FlixelUiStyleResolutionTest {
   @Test
   void missingStylesFailWithTheSkinsMessage() {
     StyledWidget w = new StyledWidget();
-    w.setStyle("nope");
+    w.setStyleName("nope");
     IllegalArgumentException e = assertThrows(IllegalArgumentException.class, () -> ui.add(w));
     assertEquals("No BoxStyle named 'nope' in this skin.", e.getMessage());
   }

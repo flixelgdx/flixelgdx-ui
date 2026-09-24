@@ -249,6 +249,23 @@ public final class FlixelUiRadioGroup {
   }
 
   /**
+   * Selects the button at {@code index} without firing any signal, like a silent
+   * {@link #select(int)}.
+   *
+   * <p>Use it for an initial selection, such as one loaded from a save. An index outside the group
+   * (for example {@code -1}) clears the selection.
+   *
+   * @param index The zero-based index in add order, or {@code -1} for no selection.
+   */
+  public void setSelectedIndex(int index) {
+    if (index < 0 || index >= radios.getSize()) {
+      clearSelection();
+      return;
+    }
+    select(radios.getItems()[index], false);
+  }
+
+  /**
    * Returns the number of radio buttons in this group.
    *
    * @return The count.
