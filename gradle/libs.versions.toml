@@ -1,5 +1,5 @@
 [versions]
-flixelgdx = "0.6.3"
+flixelgdx = "0.6.4"
 jetbrainsAnnotations = "26.1.0"
 junit = "5.10.0"
 spotless = "8.6.0"
