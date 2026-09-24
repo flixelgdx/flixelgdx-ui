@@ -45,10 +45,10 @@ import org.jetbrains.annotations.Nullable;
 /**
  * A single-line or multi-line text-entry widget.
  *
- * <p>Think of a text box as the classic typewriter: you focus it to start typing, the caret shows
- * where the next character goes, and the game routes keyboard events to it through an opt-in
- * listener. The widget never reads input itself; the game decides when this box should receive
- * keystrokes.
+ * <p>Think of a text box as the classic typewriter: you focus it to start typing, and the caret
+ * shows where the next character goes. The box listens to the keyboard on its own, but it only
+ * acts on keys while it is focused, and only the game decides when it is focused, so the game
+ * stays in charge of which box (if any) receives the player's typing.
  *
  * <h2>Basic setup</h2>
  *
@@ -89,16 +89,17 @@ import org.jetbrains.annotations.Nullable;
  * }
  * }</pre>
  *
- * <h2>Opt-in keyboard listener</h2>
+ * <h2>Keyboard listener</h2>
  *
- * <p>{@link FlixelTextBox} implements {@link FlixelKeyboardListener}. The game registers it
- * when it decides this box should receive keystrokes, and removes it when done. It is
- * never registered automatically:
+ * <p>{@link FlixelTextBox} implements {@link FlixelKeyboardListener} and registers itself with
+ * {@link Flixel#input} when it is constructed, then removes itself in {@link #destroy()}. There is
+ * nothing to register by hand. Every key event reaches every text box, but an unfocused or
+ * disabled box ignores it, so only the focused box types, edits, and moves its caret.
  *
- * <pre>{@code
- * name.onFocus.add(w -> Flixel.input.addKeyboardListener(name));
- * name.onBlur.add(w -> Flixel.input.removeKeyboardListener(name));
- * }</pre>
+ * <p>Because of that registration, destroy a text box when you are done with it. Destroying its
+ * display (which a state does when it is destroyed) or any container it is in destroys it too.
+ * Create text boxes once the game is running (for example in a state's {@code create()}), since
+ * the box registers with whichever input device is active at that moment.
  *
  * @see FlixelTextModel
  * @see FlixelTextFilter
@@ -198,6 +199,7 @@ public class FlixelTextBox extends FlixelUiWidget implements FlixelKeyboardListe
     super(width, 0f);
     initText();
     Flixel.host.onTextPasted().add(pasteHandler);
+    Flixel.input.addKeyboardListener(this);
   }
 
   /**
@@ -214,6 +216,7 @@ public class FlixelTextBox extends FlixelUiWidget implements FlixelKeyboardListe
     super(width, height);
     initText();
     Flixel.host.onTextPasted().add(pasteHandler);
+    Flixel.input.addKeyboardListener(this);
   }
 
   private void initText() {
@@ -371,6 +374,7 @@ public class FlixelTextBox extends FlixelUiWidget implements FlixelKeyboardListe
   @Override
   public void destroy() {
     Flixel.host.onTextPasted().remove(pasteHandler);
+    Flixel.input.removeKeyboardListener(this);
     stopTextInputIfStarted();
     text.destroy();
     placeholderText.destroy();

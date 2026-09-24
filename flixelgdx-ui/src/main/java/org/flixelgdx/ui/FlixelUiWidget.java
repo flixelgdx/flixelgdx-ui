@@ -618,7 +618,7 @@ public abstract class FlixelUiWidget implements IFlixelBasic, FlixelPositional, 
    * @param text The tooltip text to store, or {@code null} to clear it.
    */
   public void setTooltip(@Nullable CharSequence text) {
-    if (text == null || text.length() == 0) {
+    if (text == null || text.isEmpty()) {
       if (tooltipText != null) {
         tooltipText.clear();
       }

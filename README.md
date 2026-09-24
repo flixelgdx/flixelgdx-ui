@@ -20,9 +20,10 @@ or control scheme.
 
 ## The core idea: you wire the input
 
-**The UI never reads input itself.** No widget polls the mouse, keyboard, touches, or a gamepad, and nothing
-registers a listener behind your back. Every interaction — hovering a button, pressing it, typing a character,
-opening a dropdown — is a plain method *you* call.
+**The UI never reads input itself.** No widget polls the mouse, keyboard, touches, or a gamepad. Every
+interaction — hovering a button, pressing it, opening a dropdown — is a plain method *you* call. The one
+exception is typing: a text box listens to the keyboard on its own so you don't have to forward every key, but
+it only types while it is focused, and only you decide when it is focused.
 
 Think of a widget as a puppet on a stage. The puppet has joints that bend (hovered, pressed, focused,
 disabled) and visibly reacts when they move, but it never moves on its own. Your game code is the puppeteer:
@@ -202,13 +203,12 @@ to un-focus the old widget manually.
 
 ### Text box keyboard listener
 
-`FlixelTextBox` implements `FlixelKeyboardListener`. The game registers it when the box should receive
-keystrokes and removes it when done. It is never registered automatically:
+`FlixelTextBox` implements `FlixelKeyboardListener` and registers itself with `Flixel.input` when it is
+constructed, then removes itself in `destroy()`. There is nothing to register by hand. Every text box hears
+every key, but only the focused (and enabled) one acts on it, and only the game decides which box is focused.
 
-```java
-name.onFocus.add(w -> Flixel.input.addKeyboardListener(name));
-name.onBlur.add(w  -> Flixel.input.removeKeyboardListener(name));
-```
+Since it registers itself, destroy a text box when you are done with it. Destroying its display, or any
+container it sits in, does that for you, and a state destroys its display when the state is destroyed.
 
 The text box handles printable characters in `keyTyped()` and editing keys (backspace, delete, arrows,
 home/end, enter, ctrl+A/C/V/X) in `keyDown()`. `focus()` calls `Flixel.input.startTextInput()` for IME
@@ -502,13 +502,9 @@ pin.setMaxLength(6);
 ui.add(pin);
 ```
 
-**Registers for keyboard input as an opt-in.** The text box implements `FlixelKeyboardListener` but is never
-registered automatically. Hook `onFocus` / `onBlur` to register and remove it:
-
-```java
-name.onFocus.add(w -> Flixel.input.addKeyboardListener(name));
-name.onBlur.add(w  -> Flixel.input.removeKeyboardListener(name));
-```
+**Keyboard input is automatic.** The text box registers itself as a keyboard listener when it is created and
+removes itself when destroyed. Keys only reach the text while the box is focused, so focusing it is all the
+game has to do.
 
 **Focus on pointer down; blur on pointer down outside.**
 

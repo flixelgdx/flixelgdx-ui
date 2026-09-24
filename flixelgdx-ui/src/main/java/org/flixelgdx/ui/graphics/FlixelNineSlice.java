@@ -197,7 +197,7 @@ public final class FlixelNineSlice implements FlixelUiBackground {
    *
    * <pre>{@code
    * // In a loading state's update():
-   * if (Flixel.assets.update()) Flixel.switchState(new MenuState());
+   * if (Flixel.assets.update()) Flixel.switchState(() -> new MenuState());
    *
    * // In MenuState.create(), after the assets are ready:
    * FlixelNineSlice up = FlixelNineSlice.load(Flixel.files.internal("ui/button.png"), 6, 6, 6, 6);

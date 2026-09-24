@@ -25,6 +25,9 @@ package org.flixelgdx.ui.text;
 
 import org.flixelgdx.Flixel;
 import org.flixelgdx.FlixelCamera;
+import org.flixelgdx.input.FlixelBaseInputDevice;
+import org.flixelgdx.input.FlixelInputDevice;
+import org.flixelgdx.input.FlixelKeyboardListener;
 import org.flixelgdx.input.keyboard.FlixelKey;
 import org.flixelgdx.ui.FlixelUiDisplay;
 import org.flixelgdx.ui.FlixelUiHeadlessExtension;
@@ -407,5 +410,59 @@ class FlixelTextBoxTest {
       }
     });
     assertEquals(50, box.getText().length());
+  }
+
+  @Test
+  void registersAsKeyboardListenerUntilDestroyed() {
+    FlixelInputDevice previous = Flixel.input;
+    TestInputDevice device = new TestInputDevice();
+    Flixel.input = device;
+    try {
+      FlixelTextBox box = textBox();
+      assertTrue(device.isRegistered(box), "The box registers itself when constructed.");
+      box.destroy();
+      assertFalse(device.isRegistered(box), "The box removes itself when destroyed.");
+    } finally {
+      Flixel.input = previous;
+    }
+  }
+
+  @Test
+  void onlyTheFocusedBoxActsOnKeyEvents() {
+    FlixelInputDevice previous = Flixel.input;
+    TestInputDevice device = new TestInputDevice();
+    Flixel.input = device;
+    try {
+      FlixelTextBox focused = textBox();
+      FlixelTextBox other = textBox();
+      ui.add(focused);
+      ui.add(other);
+      focused.focus();
+
+      device.type('a');
+      device.press(FlixelKey.BACKSPACE);
+      device.type('b');
+
+      assertEquals("b", focused.getText().toString());
+      assertEquals("", other.getText().toString());
+    } finally {
+      Flixel.input = previous;
+    }
+  }
+
+  /** A minimal input device that exposes its listener list and dispatches key events on demand. */
+  private static final class TestInputDevice extends FlixelBaseInputDevice {
+
+    boolean isRegistered(FlixelKeyboardListener listener) {
+      return keyboardListeners.contains(listener, true);
+    }
+
+    void type(char character) {
+      dispatchKeyTyped(character);
+    }
+
+    void press(int keycode) {
+      dispatchKeyDown(keycode);
+    }
   }
 }

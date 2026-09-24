@@ -83,7 +83,7 @@ import org.jetbrains.annotations.Nullable;
  *
  * <h2>Size</h2>
  *
- * <p>By default the button sizes itself on every layout pass: the padding plus its content, but
+ * <p>By default, the button sizes itself on every layout pass: the padding plus its content, but
  * never smaller than the minimum size of the background it is currently showing (so a nine-slice's
  * corners never overlap). Giving it a size with {@link #setSize(float, float)},
  * {@link #setWidth(float)}, or {@link #setHeight(float)} fixes that side instead, and a

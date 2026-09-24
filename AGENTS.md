@@ -56,8 +56,8 @@ These rules are specific to this extension and take priority whenever a design d
   `Flixel.touches`, `Flixel.gamepads`, action sets, or register input listeners. Every interaction is a public
   method the game calls, such as `hover()`, `press()`, `click()`, `open()`, `select(i)`, or `scroll(n)`. The only
   exceptions are `FlixelTextBox` calling `Flixel.input` to start or stop text input from `focus()` / `blur()`,
-  and `FlixelTextBox` optionally implementing `FlixelKeyboardListener` as an opt-in that a game registers
-  itself; it is never registered automatically.
+  and `FlixelTextBox` registering itself as a `FlixelKeyboardListener` in its constructor (and removing itself
+  in `destroy()`). It only acts on keys while focused, and only the game focuses it.
 - Widgets implement the `org.flixelgdx.functional` interfaces (`IFlixelBasic`, `FlixelPositional`,
   `FlixelColorable`, and so on). They never extend `FlixelObject` or `FlixelSprite`.
 - Image and font parameters take a `FlixelFile`, never a `String` path.
