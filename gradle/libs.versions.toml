@@ -7,7 +7,7 @@ vanniktech = "0.33.0"
 
 [libraries]
 flixelgdx-core = { module = "org.flixelgdx:flixelgdx-core", version.ref = "flixelgdx" }
-flixelgdx-jvm = { module = "org.flixelgdx:flixelgdx-jvm", version.ref = "flixelgdx" }
+flixelgdx-desktop = { module = "org.flixelgdx:flixelgdx-desktop", version.ref = "flixelgdx" }
 jetbrains-annotations = { module = "org.jetbrains:annotations", version.ref = "jetbrainsAnnotations" }
 junit-bom = { module = "org.junit:junit-bom", version.ref = "junit" }
 junit-jupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junit" }

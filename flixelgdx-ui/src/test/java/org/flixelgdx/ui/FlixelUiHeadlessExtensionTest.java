@@ -24,7 +24,7 @@
 package org.flixelgdx.ui;
 
 import org.flixelgdx.Flixel;
-import org.flixelgdx.backend.jvm.file.FlixelJvmFiles;
+import org.flixelgdx.backend.desktop.file.FlixelJvmFiles;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
