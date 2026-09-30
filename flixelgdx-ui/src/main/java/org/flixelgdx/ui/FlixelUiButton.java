@@ -27,14 +27,14 @@ import org.flixelgdx.Flixel;
 import org.flixelgdx.file.FlixelFile;
 import org.flixelgdx.graphics.FlixelBatch;
 import org.flixelgdx.graphics.FlixelFrame;
+import org.flixelgdx.signal.FlixelSignal;
+import org.flixelgdx.signal.FlixelSignal.SignalHandler;
 import org.flixelgdx.ui.graphics.FlixelUiBackground;
 import org.flixelgdx.ui.graphics.FlixelUiImage;
 import org.flixelgdx.ui.skin.FlixelUiButtonStyle;
 import org.flixelgdx.ui.skin.FlixelUiSkin;
 import org.flixelgdx.util.FlixelColor;
 import org.flixelgdx.util.FlixelString;
-import org.flixelgdx.signal.FlixelSignal;
-import org.flixelgdx.signal.FlixelSignal.SignalHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

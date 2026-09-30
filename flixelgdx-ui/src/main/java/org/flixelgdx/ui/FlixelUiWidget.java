@@ -30,12 +30,12 @@ import org.flixelgdx.functional.FlixelPositional;
 import org.flixelgdx.functional.IFlixelBasic;
 import org.flixelgdx.graphics.FlixelBatch;
 import org.flixelgdx.math.FlixelMatrix;
+import org.flixelgdx.signal.FlixelSignal;
 import org.flixelgdx.ui.skin.FlixelUiSkin;
 import org.flixelgdx.ui.skin.FlixelUiStyle;
 import org.flixelgdx.util.FlixelAlign;
 import org.flixelgdx.util.FlixelColor;
 import org.flixelgdx.util.FlixelString;
-import org.flixelgdx.signal.FlixelSignal;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
