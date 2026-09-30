@@ -25,7 +25,6 @@ package org.flixelgdx.ui.skin;
 
 import org.flixelgdx.ui.FlixelUiSlider;
 import org.flixelgdx.ui.graphics.FlixelUiBackground;
-import org.flixelgdx.ui.graphics.FlixelUiColorFill;
 import org.jetbrains.annotations.Nullable;
 
 /**

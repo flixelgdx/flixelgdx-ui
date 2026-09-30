@@ -31,6 +31,7 @@ import org.flixelgdx.input.FlixelInputDevice;
 import org.flixelgdx.input.FlixelKeyboardListener;
 import org.flixelgdx.input.keyboard.FlixelKey;
 import org.flixelgdx.math.FlixelRect;
+import org.flixelgdx.signal.FlixelSignal;
 import org.flixelgdx.text.FlixelText;
 import org.flixelgdx.ui.FlixelUiDisplay;
 import org.flixelgdx.ui.FlixelUiWidget;
@@ -38,7 +39,6 @@ import org.flixelgdx.ui.graphics.FlixelUiBackground;
 import org.flixelgdx.ui.skin.FlixelTextBoxStyle;
 import org.flixelgdx.util.FlixelColor;
 import org.flixelgdx.util.FlixelString;
-import org.flixelgdx.signal.FlixelSignal;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

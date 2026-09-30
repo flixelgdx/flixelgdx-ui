@@ -490,6 +490,7 @@ class FlixelTextModelTest {
     assertEquals("llo world", model.getText().toString());
     assertEquals(0, model.getCaret());
   }
+
   @Test
   void selectWordAt_selectsTheWordUnderTheIndex() {
     model.insert("hello big world");
