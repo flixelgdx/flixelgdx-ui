@@ -24,7 +24,7 @@
 package org.flixelgdx.ui;
 
 import org.flixelgdx.collections.FlixelArray;
-import org.flixelgdx.util.signal.FlixelSignal;
+import org.flixelgdx.signal.FlixelSignal;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

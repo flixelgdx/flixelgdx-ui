@@ -30,7 +30,7 @@ import org.flixelgdx.ui.skin.FlixelUiPanelStyle;
 import org.flixelgdx.ui.skin.FlixelUiSkin;
 import org.flixelgdx.util.FlixelAlign;
 import org.flixelgdx.util.FlixelColor;
-import org.flixelgdx.util.signal.FlixelSignal;
+import org.flixelgdx.signal.FlixelSignal;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

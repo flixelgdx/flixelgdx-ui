@@ -33,8 +33,8 @@ import org.flixelgdx.ui.skin.FlixelUiButtonStyle;
 import org.flixelgdx.ui.skin.FlixelUiSkin;
 import org.flixelgdx.util.FlixelColor;
 import org.flixelgdx.util.FlixelString;
-import org.flixelgdx.util.signal.FlixelSignal;
-import org.flixelgdx.util.signal.FlixelSignal.SignalHandler;
+import org.flixelgdx.signal.FlixelSignal;
+import org.flixelgdx.signal.FlixelSignal.SignalHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

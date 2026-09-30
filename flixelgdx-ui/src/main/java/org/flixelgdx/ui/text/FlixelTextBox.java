@@ -38,7 +38,7 @@ import org.flixelgdx.ui.graphics.FlixelUiBackground;
 import org.flixelgdx.ui.skin.FlixelTextBoxStyle;
 import org.flixelgdx.util.FlixelColor;
 import org.flixelgdx.util.FlixelString;
-import org.flixelgdx.util.signal.FlixelSignal;
+import org.flixelgdx.signal.FlixelSignal;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

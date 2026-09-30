@@ -24,7 +24,7 @@
 package org.flixelgdx.ui;
 
 import org.flixelgdx.FlixelCamera;
-import org.flixelgdx.util.signal.FlixelSignal;
+import org.flixelgdx.signal.FlixelSignal;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
