@@ -67,7 +67,8 @@ import org.jetbrains.annotations.Nullable;
  *       pressed.
  *   <li>{@link #up()} releases the pressed widget and, when the pointer is still over it,
  *       activates it: buttons click, checkboxes toggle, radio buttons select, dropdowns open or
- *       close, and list rows are selected. Text boxes take focus and place their caret on
+ *       close, and list rows are selected. Sliders jump to the pointer on {@link #down()} and follow it
+ *       while pressed. Text boxes take focus and place their caret on
  *       {@link #down()} instead, and {@link #move(float, float)} while pressed drags out a
  *       selection. Custom
  *       widgets join in by overriding {@link FlixelUiWidget#onActivate(float, float)}.
@@ -167,6 +168,8 @@ public final class FlixelUiPointer {
     }
     if (pressed instanceof FlixelTextBox box) {
       box.pointerDrag(x, y);
+    } else if (pressed instanceof FlixelUiSlider slider) {
+      slider.pointerDrag(x, y);
     }
   }
 
@@ -209,6 +212,8 @@ public final class FlixelUiPointer {
       hit.press();
       if (hit instanceof FlixelTextBox box) {
         box.pointerDown(x, y, clickCount);
+      } else if (hit instanceof FlixelUiSlider slider) {
+        slider.pointerDown(x, y);
       }
     }
   }
@@ -232,6 +237,11 @@ public final class FlixelUiPointer {
       // The text box already placed its caret on down(), and activating it would undo a drag
       // selection.
       box.pointerUp();
+      return;
+    }
+    if (p instanceof FlixelUiSlider slider) {
+      // The slider already moved its thumb during the press and drag.
+      slider.pointerUp();
       return;
     }
     // A release handler may have removed or disabled the widget, so check again before activating.
@@ -281,6 +291,8 @@ public final class FlixelUiPointer {
     p.release();
     if (p instanceof FlixelTextBox box) {
       box.pointerUp();
+    } else if (p instanceof FlixelUiSlider slider) {
+      slider.pointerUp();
     }
   }
 
