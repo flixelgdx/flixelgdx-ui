@@ -473,6 +473,41 @@ public final class FlixelTextModel {
   }
 
   /**
+   * Selects the word around an index, as a double-click does in most text editors.
+   *
+   * <p>When the character at {@code index} is a letter, digit, or underscore, the whole run of
+   * such characters is selected. When it is whitespace, the whole run of whitespace is selected,
+   * and any other character selects the run of characters that are neither word characters nor
+   * whitespace. An index at the end of the text uses the last character. Does nothing on empty
+   * text.
+   *
+   * @param index The code-unit index to look at; clamped to {@code [0, length()]}.
+   * @return {@code true} when the selection changed.
+   */
+  public boolean selectWordAt(int index) {
+    int len = buffer.length();
+    if (len == 0) {
+      return false;
+    }
+    int at = clamp(index, 0, len - 1);
+    int kind = charKind(buffer.charAt(at));
+    int start = at;
+    while (start > 0 && charKind(buffer.charAt(start - 1)) == kind) {
+      start--;
+    }
+    int end = at + 1;
+    while (end < len && charKind(buffer.charAt(end)) == kind) {
+      end++;
+    }
+    int newAnchor = safeIndex(start);
+    int newCaret = safeIndex(end);
+    boolean changed = anchor != newAnchor || caret != newCaret;
+    anchor = newAnchor;
+    caret = newCaret;
+    return changed;
+  }
+
+  /**
    * Extends the selection by moving the caret to the given index without changing the anchor.
    *
    * @param index The new caret position.
@@ -787,6 +822,14 @@ public final class FlixelTextModel {
       }
     }
     return pos;
+  }
+
+  /** Returns {@code 0} for word characters, {@code 1} for whitespace, and {@code 2} for the rest. */
+  private static int charKind(char c) {
+    if (isWordChar(c)) {
+      return 0;
+    }
+    return Character.isWhitespace(c) ? 1 : 2;
   }
 
   /** Returns {@code true} for characters that form a word: letters, digits, or underscore. */
