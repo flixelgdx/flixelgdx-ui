@@ -53,7 +53,7 @@ import org.jetbrains.annotations.Nullable;
  * {@link FlixelPositional}, and {@link FlixelColorable}) instead of extending a scene object, so
  * tools that work on those interfaces, such as tweens, work on widgets unchanged. The lifecycle
  * flags ({@link #isExists()}, {@link #isActive()}, {@link #isVisible()}, {@link #kill()},
- * {@link #revive()}, {@link #destroy()}, and {@link #reset()}) behave like {@link FlixelBasic}.
+ * {@link #revive()}, and {@link #destroy()}) behave like {@link FlixelBasic}.
  *
  * <h2>Coordinates</h2>
  *
@@ -969,15 +969,6 @@ public abstract class FlixelUiWidget implements IFlixelBasic, FlixelPositional, 
     active = false;
     exists = false;
     visible = true;
-  }
-
-  /**
-   * Calls {@link #destroy()}, matching {@link FlixelBasic#reset()}. Marked final so subclasses
-   * override {@link #destroy()} instead.
-   */
-  @Override
-  public final void reset() {
-    destroy();
   }
 
   @Override

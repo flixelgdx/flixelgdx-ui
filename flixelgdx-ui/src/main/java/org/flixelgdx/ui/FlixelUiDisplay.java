@@ -627,14 +627,6 @@ public class FlixelUiDisplay implements IFlixelBasic {
     visible = true;
   }
 
-  /**
-   * Calls {@link #destroy()}, matching {@link FlixelBasic#reset()}.
-   */
-  @Override
-  public final void reset() {
-    destroy();
-  }
-
   @Override
   public void kill() {
     exists = false;
