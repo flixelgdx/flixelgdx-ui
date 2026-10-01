@@ -76,7 +76,8 @@ import org.jetbrains.annotations.Nullable;
  * <p>The track, optional fill, and thumb come from the {@link FlixelUiSliderStyle} in the
  * display's skin whose name matches {@link #getStyleName()}, or from a style passed to
  * {@link #setStyle(FlixelUiSliderStyle)}. The thumb shows its disabled, pressed, hovered, or plain
- * variant, in that priority.
+ * variant, in that priority. The hovered variant only shows while the pointer is over the thumb
+ * itself, which the slider learns from {@link #pointerMove(float, float)}.
  */
 public class FlixelUiSlider extends FlixelUiWidget {
 
@@ -103,6 +104,7 @@ public class FlixelUiSlider extends FlixelUiWidget {
 
   private boolean vertical;
   private boolean dragging;
+  private boolean thumbHovered;
 
   /**
    * Creates a horizontal slider from {@code 0} to {@code 1} with a value of {@code 0}.
@@ -264,6 +266,20 @@ public class FlixelUiSlider extends FlixelUiWidget {
     setValue(valueAt(x, y));
   }
 
+  /**
+   * Tells the slider where the pointer is, so the thumb can show its hovered look.
+   *
+   * <p>The thumb uses {@link FlixelUiSliderStyle#thumbOver} only while the slider is hovered and
+   * the point is over the thumb, not anywhere over the track. Call this whenever the pointer
+   * moves over the slider; {@link FlixelUiPointer} does it for you.
+   *
+   * @param x The X coordinate in the display camera's view space.
+   * @param y The Y coordinate in the display camera's view space.
+   */
+  public void pointerMove(float x, float y) {
+    thumbHovered = isThumbAt(x, y);
+  }
+
   /** Ends a drag and releases the slider; the value stays where it is. */
   public void pointerUp() {
     if (!dragging) {
@@ -297,6 +313,34 @@ public class FlixelUiSlider extends FlixelUiWidget {
   }
 
   /**
+   * Returns whether a point lies over the thumb.
+   *
+   * <p>It uses {@link #getScreenX()} and {@link #getScreenY()}, so the slider must have been laid
+   * out. Returns {@code false} while the slider has no style.
+   *
+   * @param x The X coordinate in the display camera's view space.
+   * @param y The Y coordinate in the display camera's view space.
+   * @return {@code true} when the point is inside the thumb's rectangle.
+   */
+  public boolean isThumbAt(float x, float y) {
+    FlixelUiSliderStyle s = style;
+    if (s == null) {
+      return false;
+    }
+    float offset = getThumbOffset();
+    float left;
+    float top;
+    if (vertical) {
+      left = screenX + (width - s.thumbWidth) * 0.5f;
+      top = screenY + offset;
+    } else {
+      left = screenX + offset;
+      top = screenY + (height - s.thumbHeight) * 0.5f;
+    }
+    return x >= left && x < left + s.thumbWidth && y >= top && y < top + s.thumbHeight;
+  }
+
+  /**
    * Moves the value up by one step when the slider is enabled.
    *
    * <p>One step is {@link #getStep()}, or a tenth of the range when no step is set.
@@ -327,8 +371,16 @@ public class FlixelUiSlider extends FlixelUiWidget {
   public void setEnabled(boolean enabled) {
     if (!enabled) {
       dragging = false;
+      thumbHovered = false;
     }
     super.setEnabled(enabled);
+  }
+
+  /** Clears the thumb's hovered look along with the hovered state. */
+  @Override
+  public void unhover() {
+    thumbHovered = false;
+    super.unhover();
   }
 
   /**
@@ -489,6 +541,15 @@ public class FlixelUiSlider extends FlixelUiWidget {
   }
 
   /**
+   * Returns whether the pointer was last reported over the thumb.
+   *
+   * @return {@code true} when the last {@link #pointerMove(float, float)} landed on the thumb.
+   */
+  public boolean isThumbHovered() {
+    return thumbHovered;
+  }
+
+  /**
    * Returns the style this slider uses.
    *
    * @return The style, or {@code null} while not on a display and no style was set directly.
@@ -536,7 +597,7 @@ public class FlixelUiSlider extends FlixelUiWidget {
       bg = s.thumbDisabled;
     } else if (isPressed()) {
       bg = s.thumbDown;
-    } else if (isHovered()) {
+    } else if (isHovered() && thumbHovered) {
       bg = s.thumbOver;
     } else {
       bg = null;

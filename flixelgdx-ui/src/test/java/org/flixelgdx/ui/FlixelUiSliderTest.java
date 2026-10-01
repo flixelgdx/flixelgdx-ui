@@ -302,6 +302,7 @@ class FlixelUiSliderTest {
     FlixelUiSlider s = slider(120, 0f, 100f, 50f, false);
     assertSame(thumbFrame, drawnThumb(s));
     s.hover();
+    s.pointerMove(70f, 30f);
     assertSame(overFrame, drawnThumb(s));
     s.press();
     assertSame(downFrame, drawnThumb(s));
@@ -309,6 +310,36 @@ class FlixelUiSliderTest {
     s.unhover();
     s.setEnabled(false);
     assertSame(disabledFrame, drawnThumb(s));
+  }
+
+  @Test
+  void thumbLooksHoveredOnlyWhileThePointerIsOverTheThumb() {
+    // The thumb spans x 60 to 80 and y 20 to 40 at a value of 50.
+    FlixelUiPointer pointer = new FlixelUiPointer(ui);
+    FlixelUiSlider s = slider(120, 0f, 100f, 50f, false);
+    pointer.move(20f, 30f);
+    assertTrue(s.isHovered());
+    assertFalse(s.isThumbHovered());
+    assertSame(thumbFrame, drawnThumb(s), "over the track but not the thumb");
+    pointer.move(70f, 30f);
+    assertTrue(s.isThumbHovered());
+    assertSame(overFrame, drawnThumb(s));
+    pointer.move(110f, 30f);
+    assertSame(thumbFrame, drawnThumb(s), "back on the track past the thumb");
+    pointer.move(70f, 30f);
+    s.unhover();
+    assertFalse(s.isThumbHovered());
+  }
+
+  @Test
+  void isThumbAtFollowsTheThumbInBothOrientations() {
+    FlixelUiSlider h = slider(120, 0f, 100f, 50f, false);
+    assertTrue(h.isThumbAt(60f, 20f));
+    assertFalse(h.isThumbAt(80f, 30f));
+    assertFalse(h.isThumbAt(59f, 30f));
+    FlixelUiSlider v = slider(120, 0f, 100f, 100f, true);
+    assertTrue(v.isThumbAt(20f, 25f), "a full vertical slider has its thumb at the top");
+    assertFalse(v.isThumbAt(20f, 125f));
   }
 
   @Test

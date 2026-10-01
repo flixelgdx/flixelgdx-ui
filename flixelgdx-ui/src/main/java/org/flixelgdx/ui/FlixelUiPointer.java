@@ -166,6 +166,9 @@ public final class FlixelUiPointer {
         dropdown.highlight(row);
       }
     }
+    if (hit instanceof FlixelUiSlider hovering) {
+      hovering.pointerMove(x, y);
+    }
     if (pressed instanceof FlixelTextBox box) {
       box.pointerDrag(x, y);
     } else if (pressed instanceof FlixelUiSlider slider) {
