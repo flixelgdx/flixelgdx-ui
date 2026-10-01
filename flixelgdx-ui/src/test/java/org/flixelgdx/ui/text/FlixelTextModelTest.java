@@ -490,4 +490,49 @@ class FlixelTextModelTest {
     assertEquals("llo world", model.getText().toString());
     assertEquals(0, model.getCaret());
   }
+
+  @Test
+  void selectWordAt_selectsTheWordUnderTheIndex() {
+    model.insert("hello big world");
+    assertTrue(model.selectWordAt(7));
+    assertEquals(6, model.getSelectionStart());
+    assertEquals(9, model.getSelectionEnd());
+    assertEquals(6, model.getAnchor());
+    assertEquals(9, model.getCaret());
+  }
+
+  @Test
+  void selectWordAt_selectsWhitespaceAndPunctuationRuns() {
+    model.insert("a   b!!c");
+    model.selectWordAt(2);
+    assertEquals(1, model.getSelectionStart());
+    assertEquals(4, model.getSelectionEnd());
+    model.selectWordAt(5);
+    assertEquals(5, model.getSelectionStart());
+    assertEquals(7, model.getSelectionEnd());
+  }
+
+  @Test
+  void selectWordAt_usesTheLastCharacterAtTheEnd() {
+    model.insert("hello world");
+    model.selectWordAt(11);
+    assertEquals(6, model.getSelectionStart());
+    assertEquals(11, model.getSelectionEnd());
+  }
+
+  @Test
+  void selectWordAt_doesNothingOnEmptyTextAndReportsChange() {
+    assertFalse(model.selectWordAt(0));
+    model.insert("word");
+    assertTrue(model.selectWordAt(1));
+    assertFalse(model.selectWordAt(2), "selecting the same word again changes nothing");
+  }
+
+  @Test
+  void selectWordAt_thenTypingReplacesTheWord() {
+    model.insert("hello world");
+    model.selectWordAt(1);
+    model.type('X');
+    assertEquals("X world", model.getText().toString());
+  }
 }

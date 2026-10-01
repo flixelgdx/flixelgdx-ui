@@ -112,6 +112,81 @@ class FlixelTextBoxTest {
   }
 
   @Test
+  void pointerDown_focusesAndPlacesTheCaret() {
+    FlixelTextBox box = textBox();
+    ui.add(box);
+    box.setText("hello");
+    box.select(0, 5);
+    box.pointerDown(-1000f, 0f, 1);
+    assertTrue(box.isFocused());
+    assertTrue(box.isSelecting());
+    assertFalse(box.hasSelection());
+    assertEquals(0, box.getCaret());
+    box.pointerUp();
+    assertFalse(box.isSelecting());
+  }
+
+  @Test
+  void pointerDrag_extendsTheSelectionFromTheAnchor() {
+    FlixelTextBox box = textBox();
+    ui.add(box);
+    box.setText("hello world");
+    box.pointerDown(-1000f, 0f, 1);
+    box.pointerDrag(100000f, 0f);
+    assertTrue(box.hasSelection());
+    assertEquals(0, box.getSelectionStart());
+    assertEquals(11, box.getSelectionEnd());
+    box.pointerUp();
+    box.pointerDrag(-1000f, 0f);
+    assertEquals(11, box.getSelectionEnd(), "dragging after release changes nothing");
+  }
+
+  @Test
+  void pointerDown_doubleClickSelectsAWord() {
+    FlixelTextBox box = textBox();
+    ui.add(box);
+    box.setText("hello world");
+    box.pointerDown(-1000f, 0f, 2);
+    assertEquals(0, box.getSelectionStart());
+    assertEquals(5, box.getSelectionEnd());
+  }
+
+  @Test
+  void pointerDown_tripleClickSelectsEverythingInASingleLineBox() {
+    FlixelTextBox box = textBox();
+    ui.add(box);
+    box.setText("hello world");
+    box.pointerDown(-1000f, 0f, 3);
+    assertEquals(0, box.getSelectionStart());
+    assertEquals(11, box.getSelectionEnd());
+  }
+
+  @Test
+  void typingAndBackspaceReplaceOrRemoveAPointerSelection() {
+    FlixelTextBox box = textBox();
+    ui.add(box);
+    box.setText("hello world");
+    box.pointerDown(-1000f, 0f, 2);
+    box.pointerUp();
+    box.type('X');
+    assertEquals("X world", box.getText().toString());
+    box.selectAll();
+    assertTrue(box.backspace());
+    assertEquals("", box.getText().toString());
+  }
+
+  @Test
+  void pointerDown_isIgnoredWhenDisabled() {
+    FlixelTextBox box = textBox();
+    ui.add(box);
+    box.setText("hello");
+    box.setEnabled(false);
+    box.pointerDown(0f, 0f, 2);
+    assertFalse(box.isSelecting());
+    assertFalse(box.hasSelection());
+  }
+
+  @Test
   void deleteForward_removesCharAfterCaret() {
     FlixelTextBox box = textBox();
     box.insert("ab");

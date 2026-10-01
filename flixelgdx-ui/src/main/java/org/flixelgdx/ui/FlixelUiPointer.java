@@ -23,6 +23,7 @@
  */
 package org.flixelgdx.ui;
 
+import org.flixelgdx.ui.text.FlixelTextBox;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -66,7 +67,10 @@ import org.jetbrains.annotations.Nullable;
  *       pressed.
  *   <li>{@link #up()} releases the pressed widget and, when the pointer is still over it,
  *       activates it: buttons click, checkboxes toggle, radio buttons select, dropdowns open or
- *       close, list rows are selected, and text boxes take focus and move their caret. Custom
+ *       close, and list rows are selected. Sliders jump to the pointer on {@link #down()} and follow it
+ *       while pressed. Text boxes take focus and place their caret on
+ *       {@link #down()} instead, and {@link #move(float, float)} while pressed drags out a
+ *       selection. Custom
  *       widgets join in by overriding {@link FlixelUiWidget#onActivate(float, float)}.
  *   <li>{@link #scroll(float)} offers the scroll to the hovered widget and then to each of its
  *       ancestors until one uses it (see {@link FlixelUiWidget#onScroll(float)}).
@@ -162,6 +166,14 @@ public final class FlixelUiPointer {
         dropdown.highlight(row);
       }
     }
+    if (hit instanceof FlixelUiSlider hovering) {
+      hovering.pointerMove(x, y);
+    }
+    if (pressed instanceof FlixelTextBox box) {
+      box.pointerDrag(x, y);
+    } else if (pressed instanceof FlixelUiSlider slider) {
+      slider.pointerDrag(x, y);
+    }
   }
 
   /**
@@ -173,6 +185,20 @@ public final class FlixelUiPointer {
    * pressed.
    */
   public void down() {
+    down(1);
+  }
+
+  /**
+   * Presses the hovered widget, telling it how many quick clicks in a row this press is.
+   *
+   * <p>Works like {@link #down()}. The click count matters to a {@link FlixelTextBox}: two selects
+   * the word under the pointer and three selects the line. The pointer does not count clicks
+   * itself, because that needs a clock; the game counts them, for example by comparing the time
+   * since the last press.
+   *
+   * @param clickCount How many quick clicks in a row this press is; {@code 1} for a single click.
+   */
+  public void down(int clickCount) {
     dropDetached();
     if (pressed != null) {
       return;
@@ -187,6 +213,11 @@ public final class FlixelUiPointer {
     if (hit != null) {
       pressed = hit;
       hit.press();
+      if (hit instanceof FlixelTextBox box) {
+        box.pointerDown(x, y, clickCount);
+      } else if (hit instanceof FlixelUiSlider slider) {
+        slider.pointerDown(x, y);
+      }
     }
   }
 
@@ -205,6 +236,17 @@ public final class FlixelUiPointer {
     }
     pressed = null;
     p.release();
+    if (p instanceof FlixelTextBox box) {
+      // The text box already placed its caret on down(), and activating it would undo a drag
+      // selection.
+      box.pointerUp();
+      return;
+    }
+    if (p instanceof FlixelUiSlider slider) {
+      // The slider already moved its thumb during the press and drag.
+      slider.pointerUp();
+      return;
+    }
     // A release handler may have removed or disabled the widget, so check again before activating.
     if (p == hovered && p.getDisplay() == display && p.isEnabled()) {
       p.onActivate(x, y);
@@ -250,6 +292,11 @@ public final class FlixelUiPointer {
     }
     pressed = null;
     p.release();
+    if (p instanceof FlixelTextBox box) {
+      box.pointerUp();
+    } else if (p instanceof FlixelUiSlider slider) {
+      slider.pointerUp();
+    }
   }
 
   /**

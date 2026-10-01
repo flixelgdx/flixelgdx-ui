@@ -12,7 +12,7 @@
   FlixelGDX UI is a flexible, comprehensive UI extension for the game framework [FlixelGDX](https://github.com/flixelgdx/flixelgdx).
   It's the perfect toolkit for anything from simple main menus to full-blown debug menus.
 
-  Panels, modals, buttons, checkboxes, radio buttons, dropdowns, text boxes, tooltips — everything a menu or HUD
+  Panels, modals, buttons, checkboxes, radio buttons, dropdowns, sliders, pictures, text boxes, tooltips — everything a menu or HUD
   needs, styled with your own art and driven by your own input.
 </div>
 
@@ -67,13 +67,14 @@ pointer = new FlixelUiPointer(ui); // In create().
 
 // In update():
 pointer.move(Flixel.mouse.getWorldX(ui.getCamera()), Flixel.mouse.getWorldY(ui.getCamera()));
-if (Flixel.mouse.justPressed(FlixelMouseButton.LEFT)) pointer.down();
+if (Flixel.mouse.justPressed(FlixelMouseButton.LEFT)) pointer.down(); // down(clicks) for double and triple clicks.
 if (Flixel.mouse.justReleased(FlixelMouseButton.LEFT)) pointer.up();
 pointer.scroll(Flixel.mouse.getScrollDeltaY());
 ```
 
 Because the game feeds it, the same pointer works with a touch screen or a gamepad-driven cursor. Custom widgets can
-react to it by overriding `onActivate(x, y)` and `onScroll(amount)`.
+react to it by overriding `onActivate(x, y)` and `onScroll(amount)`. Sliders follow the pointer while it is pressed, and
+text boxes turn a press and drag into a text selection.
 
 ### Skins
 
@@ -147,6 +148,15 @@ resolution.addItem("1280 x 720");
 resolution.addItem("1920 x 1080");
 resolution.onSelect.add(d -> applyResolution(d.getSelectedIndex()));
 
+// Sliders, horizontal or vertical, with optional step snapping.
+FlixelUiSlider volume = new FlixelUiSlider(200, 0f, 1f, 0.8f);
+volume.setStep(0.05f);
+volume.onChange.add(s -> audio.setVolume(s.getValue()));
+
+// Pictures, scaled to fit, fill, stretch, or shown at their natural size.
+FlixelUiPicture logo = new FlixelUiPicture(Flixel.files.internal("ui/logo.png"), 200, 100);
+logo.setScaleMode(FlixelUiPicture.ScaleMode.FIT);
+
 // Tooltips.
 playButton.setTooltip("Start a new game.");
 ui.showTooltip(playButton, 0.4f); // Show it after a short delay.
@@ -197,6 +207,19 @@ pin.setFilter(FlixelTextFilter.DIGITS);
 // Focus a text box to start typing into it. That's it!
 name.focus();
 ```
+
+Players can select text with the mouse, too. Press to place the caret, drag to extend the selection, and press twice
+or three times quickly to select a word or a line. With a `FlixelUiPointer` this works out of the box (pass the click
+count to `pointer.down(clicks)`); without one, call the text box's own methods:
+
+```java
+name.pointerDown(mx, my, clicks); // 1 places the caret, 2 selects a word, 3 selects the line.
+name.pointerDrag(mx, my);         // Extends the selection while the button is held.
+name.pointerUp();                 // Finishes the selection.
+```
+
+Typing, Backspace and Delete replace or remove the selection, and Ctrl+C and Ctrl+X copy and cut it. The highlight is
+drawn with `FlixelTextBoxStyle.selection`.
 
 ---
 

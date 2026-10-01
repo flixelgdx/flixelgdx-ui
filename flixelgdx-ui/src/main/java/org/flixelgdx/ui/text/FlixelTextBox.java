@@ -31,6 +31,7 @@ import org.flixelgdx.input.FlixelInputDevice;
 import org.flixelgdx.input.FlixelKeyboardListener;
 import org.flixelgdx.input.keyboard.FlixelKey;
 import org.flixelgdx.math.FlixelRect;
+import org.flixelgdx.signal.FlixelSignal;
 import org.flixelgdx.text.FlixelText;
 import org.flixelgdx.ui.FlixelUiDisplay;
 import org.flixelgdx.ui.FlixelUiWidget;
@@ -38,7 +39,6 @@ import org.flixelgdx.ui.graphics.FlixelUiBackground;
 import org.flixelgdx.ui.skin.FlixelTextBoxStyle;
 import org.flixelgdx.util.FlixelColor;
 import org.flixelgdx.util.FlixelString;
-import org.flixelgdx.signal.FlixelSignal;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -88,6 +88,15 @@ import org.jetbrains.annotations.Nullable;
  *   }
  * }
  * }</pre>
+ *
+ * <h2>Mouse selection</h2>
+ *
+ * <p>{@link #pointerDown(float, float, int)}, {@link #pointerDrag(float, float)}, and
+ * {@link #pointerUp()} turn a mouse or touch drag into a selection: press to place the caret, drag
+ * to extend the selection, release to finish, and press twice or three times quickly to select a
+ * word or a line. Typing, {@link #backspace()}, and {@link #deleteForward()} replace or remove
+ * the selection, and {@link #copy()} and {@link #cut()} use it. A {@code FlixelUiPointer} calls
+ * these for you.
  *
  * <h2>Keyboard listener</h2>
  *
@@ -183,6 +192,9 @@ public class FlixelTextBox extends FlixelUiWidget implements FlixelKeyboardListe
   private char passwordChar;
 
   private boolean customStyle;
+
+  /** {@code true} between {@link #pointerDown(float, float, int)} and {@link #pointerUp()}. */
+  private boolean selecting;
 
   /**
    * {@code true} while a matching {@link FlixelInputDevice#startTextInput()}
@@ -398,6 +410,7 @@ public class FlixelTextBox extends FlixelUiWidget implements FlixelKeyboardListe
   public void blur() {
     boolean wasFocused = isFocused();
     super.blur();
+    selecting = false;
     if (wasFocused) {
       stopTextInputIfStarted();
     }
@@ -633,6 +646,90 @@ public class FlixelTextBox extends FlixelUiWidget implements FlixelKeyboardListe
   public void selectAll() {
     if (model.selectAll()) {
       afterCaretMove();
+    }
+  }
+
+  /**
+   * Starts a mouse or touch selection at a point, as when the button goes down over the box.
+   *
+   * <p>The box takes focus and the selection grows with the click count, the way desktop text
+   * fields behave. One click places the caret. Two clicks select the word under the point. Three
+   * or more select the whole line in a multi-line box, or all the text in a single-line box.
+   * Follow up with {@link #pointerDrag(float, float)} while the button stays down and
+   * {@link #pointerUp()} when it is released. The box never reads the mouse; the game counts the
+   * clicks (for example by comparing the time since the last press) and passes the number in.
+   *
+   * <pre>{@code
+   * // Game input code.
+   * if (Flixel.mouse.justPressed(FlixelMouseButton.LEFT) && ui.getWidgetAt(mx, my) == name) {
+   *   name.pointerDown(mx, my, clicks);
+   * }
+   * if (Flixel.mouse.pressed(FlixelMouseButton.LEFT)) name.pointerDrag(mx, my);
+   * if (Flixel.mouse.justReleased(FlixelMouseButton.LEFT)) name.pointerUp();
+   * }</pre>
+   *
+   * <p>Does nothing when the box is disabled.
+   *
+   * @param x The X coordinate in the display camera's view space.
+   * @param y The Y coordinate in the display camera's view space.
+   * @param clickCount How many quick clicks in a row this press is; values below {@code 1} count
+   *     as one.
+   */
+  public void pointerDown(float x, float y, int clickCount) {
+    if (!isEnabled()) {
+      return;
+    }
+    focus();
+    int index = getIndexAt(x, y);
+    if (clickCount >= 3) {
+      selectLineAt(index);
+    } else if (clickCount == 2) {
+      if (model.selectWordAt(index)) {
+        afterCaretMove();
+      }
+    } else {
+      model.setCaret(index, false);
+      afterCaretMove();
+    }
+    selecting = true;
+  }
+
+  /**
+   * Extends the selection to a point while the pointer is held down.
+   *
+   * <p>The anchor set by {@link #pointerDown(float, float, int)} stays fixed and the caret follows
+   * the point, scrolling the text to keep the caret visible. Does nothing unless a pointer press
+   * is in progress.
+   *
+   * @param x The X coordinate in the display camera's view space.
+   * @param y The Y coordinate in the display camera's view space.
+   */
+  public void pointerDrag(float x, float y) {
+    if (!selecting || !isEnabled()) {
+      return;
+    }
+    if (model.extendSelection(getIndexAt(x, y))) {
+      afterCaretMove();
+    }
+  }
+
+  /** Finishes a mouse or touch selection, keeping whatever is selected. */
+  public void pointerUp() {
+    selecting = false;
+  }
+
+  /**
+   * Selects the line that contains an index, or all text in a single-line box.
+   *
+   * @param index A code-unit index inside the line.
+   */
+  public void selectLineAt(int index) {
+    if (model.isMultiLine()) {
+      int line = text.getCharLine(index);
+      model.select(text.getLineStart(line), text.getLineEnd(line));
+      afterCaretMove();
+    } else {
+      selectAll();
     }
   }
 
@@ -910,6 +1007,24 @@ public class FlixelTextBox extends FlixelUiWidget implements FlixelKeyboardListe
   public FlixelTextFilter getFilter() {
     FlixelTextFilter f = model.getFilter();
     return f == FlixelTextFilter.ANY ? null : f;
+  }
+
+  /**
+   * Returns whether a mouse or touch selection is in progress.
+   *
+   * @return {@code true} between {@link #pointerDown(float, float, int)} and {@link #pointerUp()}.
+   */
+  public boolean isSelecting() {
+    return selecting;
+  }
+
+  /**
+   * Returns whether any text is selected.
+   *
+   * @return {@code true} when the selection is not empty.
+   */
+  public boolean hasSelection() {
+    return model.hasSelection();
   }
 
   public char getPasswordChar() {
