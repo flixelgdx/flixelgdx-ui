@@ -35,11 +35,6 @@ import org.jetbrains.annotations.Nullable;
 /**
  * A widget that shows a picture, such as a logo, a portrait, or an icon, inside the UI.
  *
- * <p>Think of it as a picture frame hung on the wall. The frame is the widget (it has a position,
- * a size, and anchors like any other widget) and the photo inside it is the image. The
- * {@link ScaleMode} decides how the photo is fitted into the frame: stretched to the edges, shrunk
- * to fit without cropping, grown to cover it, or left at its own size.
- *
  * <pre>{@code
  * // A logo that keeps its shape while it scales to fit a 200x100 box.
  * FlixelUiPicture logo = new FlixelUiPicture(Flixel.files.internal("ui/logo.png"), 200, 100);
