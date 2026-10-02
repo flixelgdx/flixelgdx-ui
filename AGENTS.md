@@ -139,7 +139,7 @@ Before finishing a coding task, run:
 1. Compiling: `./gradlew compileJava`
 2. Spotless: `./gradlew spotlessApply`
 3. Checkstyle: `./gradlew checkstyleMain`
-4. Javadocs: `./gradlew javadocAll`
+4. Javadocs: `./gradlew javadoc`
 5. Unit tests: `./gradlew test`
 
 Additionally, if you are currently on a branch for a pull request, always update the description of the PR to
