@@ -189,6 +189,31 @@ public class FlixelUiContainer extends FlixelUiWidget {
   }
 
   /**
+   * Returns how many children the debugger lists under this container.
+   *
+   * @return The child count, in draw order.
+   */
+  @Override
+  public int getDebugChildCount() {
+    return children.getSize();
+  }
+
+  /**
+   * Returns one child for the debugger.
+   *
+   * <p>The index is the position in draw order, so the last index is the topmost child and a scene
+   * path such as {@code state.2.0.1} stays stable until children are added or removed.
+   *
+   * @param index The position, from {@code 0} to {@link #getDebugChildCount()} minus 1.
+   * @return The child at that position.
+   */
+  @Nullable
+  @Override
+  public Object getDebugChild(int index) {
+    return index >= 0 && index < children.getSize() ? children.get(index) : null;
+  }
+
+  /**
    * Sets the same padding on all four sides.
    *
    * @param all The padding in pixels.

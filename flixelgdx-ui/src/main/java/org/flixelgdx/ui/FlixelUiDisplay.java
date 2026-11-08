@@ -28,6 +28,7 @@ import org.flixelgdx.FlixelBasic;
 import org.flixelgdx.FlixelCamera;
 import org.flixelgdx.FlixelSprite;
 import org.flixelgdx.FlixelState;
+import org.flixelgdx.debug.FlixelDebugNode;
 import org.flixelgdx.functional.IFlixelBasic;
 import org.flixelgdx.graphics.FlixelBatch;
 import org.flixelgdx.graphics.FlixelGraphicsManager;
@@ -148,7 +149,7 @@ import org.jetbrains.annotations.Nullable;
  * @see FlixelUiWidget
  * @see FlixelUiContainer
  */
-public class FlixelUiDisplay implements IFlixelBasic {
+public class FlixelUiDisplay implements IFlixelBasic, FlixelDebugNode {
 
   /**
    * How many clip rectangles can be pushed at once with
@@ -433,6 +434,38 @@ public class FlixelUiDisplay implements IFlixelBasic {
     } finally {
       resetClip(batch);
     }
+  }
+
+  /**
+   * Returns how many layers the debugger lists under this display.
+   *
+   * @return Always {@code 4}: the root, the modal layer, the popup layer, and the tooltip layer.
+   */
+  @Override
+  public int getDebugChildCount() {
+    return 4;
+  }
+
+  /**
+   * Returns one layer for the debugger, in draw order.
+   *
+   * <p>Index {@code 0} is the root, {@code 1} holds open modals, {@code 2} holds floating widgets
+   * such as dropdown lists, and {@code 3} holds the tooltip. Later layers draw on top, so the
+   * debugger finds the topmost widget first.
+   *
+   * @param index The layer index, from {@code 0} to {@code 3}.
+   * @return The layer, or {@code null} for an index out of range.
+   */
+  @Nullable
+  @Override
+  public Object getDebugChild(int index) {
+    return switch (index) {
+      case 0 -> root;
+      case 1 -> modalLayer;
+      case 2 -> popupLayer;
+      case 3 -> tooltipLayer;
+      default -> null;
+    };
   }
 
   /**
