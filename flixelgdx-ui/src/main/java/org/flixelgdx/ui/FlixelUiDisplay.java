@@ -275,6 +275,7 @@ public class FlixelUiDisplay implements IFlixelBasic, FlixelDebugNode {
       throw new IllegalArgumentException("A UI display needs a skin.");
     }
     this.camera = camera;
+    FlixelUiDebugSections.register();
     this.skin = skin;
     root = new FlixelUiContainer();
     modalLayer = new FlixelUiContainer();
