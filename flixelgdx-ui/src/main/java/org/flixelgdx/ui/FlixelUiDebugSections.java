@@ -24,8 +24,8 @@
 package org.flixelgdx.ui;
 
 import org.flixelgdx.Flixel;
+import org.flixelgdx.debug.feeds.FlixelDebugInspector;
 import org.flixelgdx.debug.inspector.FlixelSectionBuilder;
-import org.flixelgdx.debug.panels.FlixelDebugInspectorPanel;
 import org.flixelgdx.ui.text.FlixelTextBox;
 import org.jetbrains.annotations.NotNull;
 
@@ -58,7 +58,7 @@ public final class FlixelUiDebugSections {
    * the sections are already there.
    */
   public static void register() {
-    if (Flixel.debug != null && Flixel.isDebugMode()) {
+    if (Flixel.isDebugMode()) {
       register(Flixel.debug.inspector);
     }
   }
@@ -68,7 +68,7 @@ public final class FlixelUiDebugSections {
    *
    * @param inspector The inspector to teach.
    */
-  public static void register(@NotNull FlixelDebugInspectorPanel inspector) {
+  public static void register(@NotNull FlixelDebugInspector inspector) {
     if (inspector.isRegistered(FlixelUiWidget.class)) {
       return;
     }
@@ -162,6 +162,6 @@ public final class FlixelUiDebugSections {
           if (tip != null) {
             out.concat(tip);
           }
-        }, (w, text) -> w.setTooltip(text.length() == 0 ? null : text.toString()));
+        }, (w, text) -> w.setTooltip(text.isEmpty() ? null : text.toString()));
   }
 }

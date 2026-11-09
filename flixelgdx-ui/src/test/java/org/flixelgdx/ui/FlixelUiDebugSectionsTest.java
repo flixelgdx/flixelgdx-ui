@@ -26,7 +26,7 @@ package org.flixelgdx.ui;
 import org.flixelgdx.Flixel;
 import org.flixelgdx.FlixelCamera;
 import org.flixelgdx.debug.FlixelDebugObjectIds;
-import org.flixelgdx.debug.panels.FlixelDebugInspectorPanel;
+import org.flixelgdx.debug.feeds.FlixelDebugInspector;
 import org.flixelgdx.debug.remote.FlixelDebugMessageReader;
 import org.flixelgdx.debug.remote.FlixelDebugMessageWriter;
 import org.flixelgdx.debug.remote.FlixelDebugProtocol;
@@ -49,13 +49,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @ExtendWith(FlixelUiHeadlessExtension.class)
 class FlixelUiDebugSectionsTest {
 
-  private FlixelDebugInspectorPanel inspector;
+  private FlixelDebugInspector inspector;
 
   @BeforeEach
   void setUp() {
     Flixel.cameras.clear();
     Flixel.cameras.add(new FlixelCamera(640, 360));
-    inspector = new FlixelDebugInspectorPanel(new FlixelDebugObjectIds());
+    inspector = new FlixelDebugInspector(new FlixelDebugObjectIds());
     FlixelUiDebugSections.register(inspector);
   }
 
@@ -156,7 +156,7 @@ class FlixelUiDebugSectionsTest {
 
   private String rows() {
     FlixelDebugMessageWriter w = new FlixelDebugMessageWriter(64);
-    w.beginMessage(FlixelDebugProtocol.MSG_PANEL_DATA);
+    w.beginMessage(FlixelDebugProtocol.MSG_FEED_DATA);
     w.writeU16(7);
     inspector.write(w);
     ByteBuffer data = w.finish();
@@ -167,7 +167,7 @@ class FlixelUiDebugSectionsTest {
 
   private void set(int section, int property, Consumer<FlixelDebugMessageWriter> value) {
     FlixelDebugMessageWriter w = new FlixelDebugMessageWriter(64);
-    w.beginMessage(FlixelDebugProtocol.MSG_PANEL_ACTION);
+    w.beginMessage(FlixelDebugProtocol.MSG_FEED_ACTION);
     w.writeU16(7);
     w.writeU8(FlixelDebugProtocol.INSPECTOR_SET_PROPERTY);
     w.writeI32(inspector.getSelectedId()).writeU16(section).writeU16(property);
