@@ -23,6 +23,7 @@
  */
 package org.flixelgdx.ui;
 
+import org.flixelgdx.input.mouse.FlixelMouseCursor;
 import org.flixelgdx.ui.text.FlixelTextBox;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -53,6 +54,7 @@ import org.jetbrains.annotations.Nullable;
  * if (Flixel.mouse.justPressed(FlixelMouseButton.LEFT)) pointer.down();
  * if (Flixel.mouse.justReleased(FlixelMouseButton.LEFT)) pointer.up();
  * pointer.scroll(Flixel.mouse.getScrollDeltaY());
+ * Flixel.mouse.icons.setCursor(pointer.getCursor());
  * }</pre>
  *
  * <h2>What each call does</h2>
@@ -74,6 +76,8 @@ import org.jetbrains.annotations.Nullable;
  *       widgets join in by overriding {@link FlixelUiWidget#onActivate(float, float)}.
  *   <li>{@link #scroll(float)} offers the scroll to the hovered widget and then to each of its
  *       ancestors until one uses it (see {@link FlixelUiWidget#onScroll(float)}).
+ *   <li>{@link #getCursor()} reports the mouse cursor the pressed or hovered widget asks for. It
+ *       only reports it; the game applies it (see {@link FlixelUiCursors}).
  * </ul>
  *
  * <p>{@link #down()}, {@link #up()}, and {@link #scroll(float)} act on the widget found by the
@@ -372,6 +376,40 @@ public final class FlixelUiPointer {
   @Nullable
   public FlixelUiWidget getPressed() {
     return pressed;
+  }
+
+  /**
+   * Returns the mouse cursor the UI asks for right now.
+   *
+   * <p>While a widget is held down, its {@linkplain FlixelUiWidget#getPressedCursor() pressed
+   * cursor} wins, even when the pointer has been dragged off it, so a slider keeps its grabbing
+   * hand for the whole drag. Otherwise the hovered widget's {@linkplain FlixelUiWidget#getCursor()
+   * cursor} is used. The pointer only reports the cursor; the game applies it, so this works the
+   * same with a mouse, a touch screen, or a gamepad-driven cursor that has no icon:
+   *
+   * <pre>{@code
+   * Flixel.mouse.icons.setCursor(pointer.getCursor());
+   * }</pre>
+   *
+   * <p>Reading it is allocation-free, so calling it every frame is fine.
+   *
+   * @return The cursor to show. {@link FlixelMouseCursor#ARROW} when nothing asks for one or
+   *     {@link FlixelUiCursors#enabled} is {@code false}. Never {@code null}.
+   */
+  @NotNull
+  public FlixelMouseCursor getCursor() {
+    if (!FlixelUiCursors.enabled) {
+      return FlixelMouseCursor.ARROW;
+    }
+    FlixelMouseCursor cursor = null;
+    FlixelUiWidget p = pressed;
+    FlixelUiWidget h = hovered;
+    if (p != null && p.getDisplay() == display && p.isEnabled()) {
+      cursor = p.getPressedCursor();
+    } else if (h != null && h.getDisplay() == display && h.isEnabled()) {
+      cursor = h.getCursor();
+    }
+    return cursor != null ? cursor : FlixelMouseCursor.ARROW;
   }
 
   public float getX() {
