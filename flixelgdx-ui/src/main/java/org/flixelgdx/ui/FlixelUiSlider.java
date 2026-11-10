@@ -24,6 +24,7 @@
 package org.flixelgdx.ui;
 
 import org.flixelgdx.graphics.FlixelBatch;
+import org.flixelgdx.input.mouse.FlixelMouseCursor;
 import org.flixelgdx.math.FlixelMath;
 import org.flixelgdx.signal.FlixelSignal;
 import org.flixelgdx.ui.graphics.FlixelUiBackground;
@@ -227,6 +228,29 @@ public class FlixelUiSlider extends FlixelUiWidget {
       }
     }
     batch.setColor(FlixelColor.WHITE);
+  }
+
+  /**
+   * Returns {@link FlixelUiCursors#slider}, so sliders show an open hand by default.
+   *
+   * @return The default slider cursor, or {@code null} for none.
+   */
+  @Override
+  @Nullable
+  protected FlixelMouseCursor getDefaultCursor() {
+    return FlixelUiCursors.slider;
+  }
+
+  /**
+   * Returns {@link FlixelUiCursors#sliderDragging}, so dragging a slider shows a closed hand by
+   * default.
+   *
+   * @return The default dragging cursor, or {@code null} to keep the hover cursor.
+   */
+  @Override
+  @Nullable
+  protected FlixelMouseCursor getDefaultPressedCursor() {
+    return FlixelUiCursors.sliderDragging;
   }
 
   /**
