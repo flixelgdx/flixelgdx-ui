@@ -24,7 +24,9 @@
 package org.flixelgdx.ui;
 
 import org.flixelgdx.FlixelBasic;
+import org.flixelgdx.FlixelCamera;
 import org.flixelgdx.FlixelObject;
+import org.flixelgdx.debug.FlixelDebugNode;
 import org.flixelgdx.functional.FlixelColorable;
 import org.flixelgdx.functional.FlixelPositional;
 import org.flixelgdx.functional.IFlixelBasic;
@@ -103,7 +105,7 @@ import org.jetbrains.annotations.Nullable;
  * @see FlixelUiContainer
  * @see FlixelUiDisplay
  */
-public abstract class FlixelUiWidget implements IFlixelBasic, FlixelPositional, FlixelColorable {
+public abstract class FlixelUiWidget implements IFlixelBasic, FlixelPositional, FlixelColorable, FlixelDebugNode {
 
   /** Dispatched when {@link #hover()} changes this widget from not hovered to hovered. */
   public final FlixelSignal<FlixelUiWidget> onHover = new FlixelSignal<>();
@@ -427,6 +429,37 @@ public abstract class FlixelUiWidget implements IFlixelBasic, FlixelPositional, 
    */
   boolean canBeHit() {
     return interactive && enabled;
+  }
+
+  /**
+   * Reports this widget's rectangle to the debugger, in the display camera's view space.
+   *
+   * <p>The box is {@link #getScreenX()}, {@link #getScreenY()}, {@link #getWidth()}, and
+   * {@link #getHeight()}, which already are in the space the debugger expects. It is reported only
+   * when {@code cam} is the camera of this widget's display, the widget and all of its ancestors
+   * exist and are visible, and the area is not empty. A display's own layers have no parent and
+   * report nothing, so they never cover the widgets inside them when the debugger picks. Does not
+   * allocate.
+   *
+   * @param cam The camera the box is measured on.
+   * @param out Receives {@code left, top, width, height}.
+   * @return {@code true} when the box was written.
+   */
+  @Override
+  public boolean getDebugBounds(@NotNull FlixelCamera cam, float[] out) {
+    if (display == null || parent == null || display.getCamera() != cam || width <= 0f || height <= 0f) {
+      return false;
+    }
+    for (FlixelUiWidget w = this; w != null; w = w.parent) {
+      if (!w.exists || !w.visible) {
+        return false;
+      }
+    }
+    out[0] = screenX;
+    out[1] = screenY;
+    out[2] = width;
+    out[3] = height;
+    return true;
   }
 
   /**

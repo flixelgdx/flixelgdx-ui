@@ -221,6 +221,21 @@ name.pointerUp();                 // Finishes the selection.
 Typing, Backspace and Delete replace or remove the selection, and Ctrl+C and Ctrl+X copy and cut it. The highlight is
 drawn with `FlixelTextBoxStyle.selection`.
 
+### Debugger Support
+
+`FlixelUiDisplay` and every widget implement the framework's `FlixelDebugNode`, so the FlixelGDX debugger shows the
+whole UI in its scene tree and inspector, draws a box around each widget in the viewport, and can pick or click
+widgets there. A display lists its layers (root, modals, popups, tooltip) and a container lists its children in draw
+order, so a scene path such as `state.2.0.1` stays stable. Debugger clicks and typed text arrive as ordinary input,
+so your game's pointer forwarding and focused text boxes react to them like to a real mouse and keyboard.
+
+The debugger's inspector also shows every widget's state and lets you edit it. Each widget lists its visibility,
+enabled state, position, size, screen position, alpha, and tooltip, plus its own rows: label and button text,
+checkbox and radio state, slider value and range, dropdown selection, and text box text, focus, and caret. Edits use
+the widget's normal setters, so change signals such as `onChange` and `onSelect` fire like they do for a player. The
+rows are registered automatically the first time a `FlixelUiDisplay` is created in debug mode (see
+`FlixelUiDebugSections`).
+
 ---
 
 ## Installation
