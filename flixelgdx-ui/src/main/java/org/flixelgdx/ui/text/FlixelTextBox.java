@@ -30,9 +30,11 @@ import org.flixelgdx.graphics.FlixelViewport;
 import org.flixelgdx.input.FlixelInputDevice;
 import org.flixelgdx.input.FlixelKeyboardListener;
 import org.flixelgdx.input.keyboard.FlixelKey;
+import org.flixelgdx.input.mouse.FlixelMouseCursor;
 import org.flixelgdx.math.FlixelRect;
 import org.flixelgdx.signal.FlixelSignal;
 import org.flixelgdx.text.FlixelText;
+import org.flixelgdx.ui.FlixelUiCursors;
 import org.flixelgdx.ui.FlixelUiDisplay;
 import org.flixelgdx.ui.FlixelUiWidget;
 import org.flixelgdx.ui.graphics.FlixelUiBackground;
@@ -422,6 +424,17 @@ public class FlixelTextBox extends FlixelUiWidget implements FlixelKeyboardListe
       stopTextInputIfStarted();
     }
     super.setEnabled(enabled);
+  }
+
+  /**
+   * Returns {@link FlixelUiCursors#textBox}, so text boxes show a text beam by default.
+   *
+   * @return The default text box cursor, or {@code null} for none.
+   */
+  @Override
+  @Nullable
+  protected FlixelMouseCursor getDefaultCursor() {
+    return FlixelUiCursors.textBox;
   }
 
   /** Takes focus and moves the caret to the clicked character. */

@@ -27,6 +27,7 @@ import org.flixelgdx.Flixel;
 import org.flixelgdx.file.FlixelFile;
 import org.flixelgdx.graphics.FlixelBatch;
 import org.flixelgdx.graphics.FlixelFrame;
+import org.flixelgdx.input.mouse.FlixelMouseCursor;
 import org.flixelgdx.signal.FlixelSignal;
 import org.flixelgdx.signal.FlixelSignal.SignalHandler;
 import org.flixelgdx.ui.graphics.FlixelUiBackground;
@@ -235,6 +236,17 @@ public class FlixelUiButton extends FlixelUiWidget {
       return;
     }
     onClick.dispatch(this);
+  }
+
+  /**
+   * Returns {@link FlixelUiCursors#button}, so buttons show a pointing hand by default.
+   *
+   * @return The default button cursor, or {@code null} for none.
+   */
+  @Override
+  @Nullable
+  protected FlixelMouseCursor getDefaultCursor() {
+    return FlixelUiCursors.button;
   }
 
   /** Clicks the button when a {@link FlixelUiPointer} presses and releases on it. */

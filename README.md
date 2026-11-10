@@ -70,11 +70,16 @@ pointer.move(Flixel.mouse.getWorldX(ui.getCamera()), Flixel.mouse.getWorldY(ui.g
 if (Flixel.mouse.justPressed(FlixelMouseButton.LEFT)) pointer.down(); // down(clicks) for double and triple clicks.
 if (Flixel.mouse.justReleased(FlixelMouseButton.LEFT)) pointer.up();
 pointer.scroll(Flixel.mouse.getScrollDeltaY());
+Flixel.mouse.icons.setCursor(pointer.getCursor()); // A hand over buttons, a text beam over text boxes.
 ```
 
 Because the game feeds it, the same pointer works with a touch screen or a gamepad-driven cursor. Custom widgets can
 react to it by overriding `onActivate(x, y)` and `onScroll(amount)`. Sliders follow the pointer while it is pressed, and
 text boxes turn a press and drag into a text selection.
+
+The pointer also reports which mouse cursor the UI wants: a hand over buttons, a text beam over text boxes, and an
+open or closed hand on sliders. The game applies it, so the UI still never touches input. Change or turn off the
+defaults per widget type (or everywhere) with `FlixelUiCursors`, and override a single widget with `setCursor(...)`.
 
 ### Skins
 

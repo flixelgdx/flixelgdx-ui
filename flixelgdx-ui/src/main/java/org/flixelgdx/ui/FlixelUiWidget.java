@@ -31,6 +31,7 @@ import org.flixelgdx.functional.FlixelColorable;
 import org.flixelgdx.functional.FlixelPositional;
 import org.flixelgdx.functional.IFlixelBasic;
 import org.flixelgdx.graphics.FlixelBatch;
+import org.flixelgdx.input.mouse.FlixelMouseCursor;
 import org.flixelgdx.math.FlixelMatrix;
 import org.flixelgdx.signal.FlixelSignal;
 import org.flixelgdx.ui.skin.FlixelUiSkin;
@@ -202,6 +203,14 @@ public abstract class FlixelUiWidget implements IFlixelBasic, FlixelPositional, 
    */
   @Nullable
   private FlixelString tooltipText;
+
+  /** The cursor this widget asks for while hovered, or {@code null} to use its default. */
+  @Nullable
+  private FlixelMouseCursor cursor;
+
+  /** The cursor this widget asks for while pressed, or {@code null} to use its default. */
+  @Nullable
+  private FlixelMouseCursor pressedCursor;
 
   /**
    * Whether {@link FlixelUiDisplay#getWidgetAt(float, float)} can return this widget.
@@ -712,6 +721,87 @@ public abstract class FlixelUiWidget implements IFlixelBasic, FlixelPositional, 
    */
   public boolean hasTooltip() {
     return tooltipText != null && !tooltipText.isEmpty();
+  }
+
+  /**
+   * Returns the mouse cursor this widget asks for while the pointer is over it.
+   *
+   * <p>The UI never changes the cursor itself. {@link FlixelUiPointer#getCursor()} reads this for
+   * the hovered widget so the game can show it. When no cursor was set with
+   * {@link #setCursor(FlixelMouseCursor)}, the widget's default is used, which comes from
+   * {@link FlixelUiCursors} for buttons, text boxes, and sliders.
+   *
+   * @return The cursor to show, or {@code null} when this widget does not ask for one.
+   */
+  @Nullable
+  public FlixelMouseCursor getCursor() {
+    return cursor != null ? cursor : getDefaultCursor();
+  }
+
+  /**
+   * Sets the mouse cursor this widget asks for while the pointer is over it, replacing its default.
+   *
+   * <pre>{@code
+   * dangerButton.setCursor(FlixelMouseCursor.NOT_ALLOWED);
+   * creditsLabel.setCursor(FlixelMouseCursor.ARROW); // Opt this one widget out.
+   * }</pre>
+   *
+   * @param cursor The cursor to ask for, or {@code null} to go back to the default.
+   */
+  public void setCursor(@Nullable FlixelMouseCursor cursor) {
+    this.cursor = cursor;
+  }
+
+  /**
+   * Returns the mouse cursor this widget asks for while it is pressed.
+   *
+   * <p>Falls back to {@link #getCursor()} when neither a pressed cursor nor a default for it is
+   * set, so most widgets keep the same cursor while held.
+   *
+   * @return The cursor to show, or {@code null} when this widget does not ask for one.
+   */
+  @Nullable
+  public FlixelMouseCursor getPressedCursor() {
+    if (pressedCursor != null) {
+      return pressedCursor;
+    }
+    FlixelMouseCursor fallback = getDefaultPressedCursor();
+    return fallback != null ? fallback : getCursor();
+  }
+
+  /**
+   * Sets the mouse cursor this widget asks for while it is pressed, replacing its default.
+   *
+   * @param cursor The cursor to ask for, or {@code null} to go back to the default.
+   */
+  public void setPressedCursor(@Nullable FlixelMouseCursor cursor) {
+    this.pressedCursor = cursor;
+  }
+
+  /**
+   * Returns the cursor this kind of widget asks for while hovered when none was set.
+   *
+   * <p>Override it in custom widgets that should change the cursor by default. The base widget
+   * asks for none.
+   *
+   * @return The default cursor, or {@code null} for none.
+   */
+  @Nullable
+  protected FlixelMouseCursor getDefaultCursor() {
+    return null;
+  }
+
+  /**
+   * Returns the cursor this kind of widget asks for while pressed when none was set.
+   *
+   * <p>Return {@code null} to keep using {@link #getCursor()} while pressed, which the base
+   * widget does.
+   *
+   * @return The default pressed cursor, or {@code null} to use the hover cursor.
+   */
+  @Nullable
+  protected FlixelMouseCursor getDefaultPressedCursor() {
+    return null;
   }
 
   /**
