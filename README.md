@@ -7,7 +7,7 @@
   [![JitPack](https://jitpack.io/v/flixelgdx/flixelgdx-ui.svg)](https://jitpack.io/#flixelgdx/flixelgdx-ui)
   [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
   [![FlixelGDX 0.7.0](https://img.shields.io/badge/FlixelGDX-0.7.0-red)](https://github.com/flixelgdx/flixelgdx)
-  [![Java 17+](https://img.shields.io/badge/Java-17%2B-orange)](https://adoptium.net/temurin/releases?version=17&os=any&arch=any)
+  [![Java 25+](https://img.shields.io/badge/Java-25%2B-orange)](https://adoptium.net/temurin/releases?version=25&os=any&arch=any)
 
   FlixelGDX UI is a flexible, comprehensive UI extension for the game framework [FlixelGDX](https://github.com/flixelgdx/flixelgdx).
   It's the perfect toolkit for anything from simple main menus to full-blown debug menus.

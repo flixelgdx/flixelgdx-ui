@@ -5,7 +5,7 @@ self-contained: it depends on the FlixelGDX framework (`org.flixelgdx:flixelgdx-
 therefore has two parts: getting the extension to build against the framework, and then consuming your local
 extension from a separate test game.
 
-This guide focuses on what is specific to this repository. For the full environment setup (installing JDK 17
+This guide focuses on what is specific to this repository. For the full environment setup (installing JDK 25
 with Eclipse Temurin, Git, IDE configuration, and platform troubleshooting), follow the framework's guide,
 which applies here unchanged:
 **[flixelgdx/flixelgdx -> COMPILING.md](https://github.com/flixelgdx/flixelgdx/blob/master/COMPILING.md)**.
@@ -25,8 +25,8 @@ which applies here unchanged:
 
 ## Prerequisites
 
-- **Java (JDK 17, Eclipse Temurin).** The build uses the Gradle wrapper and a Java 17 toolchain. Install
-  Temurin 17 as described in the framework's
+- **Java (JDK 25, Eclipse Temurin).** The build uses the Gradle wrapper and a Java 25 toolchain. Install
+  Temurin 25 as described in the framework's
   [COMPILING.md](https://github.com/flixelgdx/flixelgdx/blob/master/COMPILING.md).
 - **Git**, to clone this repository and, optionally, the framework.
 
