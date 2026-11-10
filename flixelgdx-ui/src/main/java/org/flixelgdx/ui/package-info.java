@@ -69,6 +69,7 @@
  * if (Flixel.mouse.justPressed(FlixelMouseButton.LEFT)) pointer.down();
  * if (Flixel.mouse.justReleased(FlixelMouseButton.LEFT)) pointer.up();
  * pointer.scroll(Flixel.mouse.getScrollDeltaY());
+ * Flixel.mouse.icons.setCursor(pointer.getCursor());
  * }</pre>
  *
  * <p>The pointer has no clock, so it cannot tell a double click from two single clicks. A game
@@ -76,6 +77,10 @@
  * {@link org.flixelgdx.ui.FlixelUiPointer#down(int) FlixelUiPointer.down(...)}. Before treating a click as a click in the game world, check
  * {@link org.flixelgdx.ui.FlixelUiPointer#getHovered() FlixelUiPointer.getHovered()}: it is {@code null} when the cursor is not over the UI, so
  * pressing a button does not also fire the player's weapon.
+ *
+ * <p>{@link org.flixelgdx.ui.FlixelUiPointer#getCursor() FlixelUiPointer.getCursor()} reports the mouse cursor the UI asks
+ * for (a hand over buttons, a text beam over text boxes), and the game applies it. The defaults live in
+ * {@link org.flixelgdx.ui.FlixelUiCursors FlixelUiCursors}.
  *
  * <h2>Wiring widgets by hand</h2>
  *
