@@ -124,7 +124,7 @@ consistent. Follow the orders below:
 
 ### Language and style
 
-- Target **Java 17**. Prefer modern features (records, lambdas, modern `switch`) over legacy patterns.
+- Target **Java 25**. Prefer modern features (records, lambdas, modern `switch`) over legacy patterns.
 - **Import** every type you use. Do **not** use star imports (`*`).
 - Do **not** use fully qualified class names inline when a normal import would read cleanly.
 - Empty or void-returning methods: opening brace on the same line per `.editorconfig` (example:
