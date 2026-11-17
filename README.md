@@ -299,7 +299,7 @@ If you use the `flxgdx` command-line tool, one command adds the extension to you
 for you:
 
 ```sh
-flxgdx add library flixelgdx/flixelgdx-ui
+flxgdx add library --repo flixelgdx/flixelgdx-ui
 ```
 
 It installs the newest release. The manifest that makes this work is [`flxgdx.yml`](flxgdx.yml).
