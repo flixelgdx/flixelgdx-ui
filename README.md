@@ -293,19 +293,6 @@ dependencies {
 
 ---
 
-## Install with flxgdx
-
-If you use the `flxgdx` command-line tool, one command adds the extension to your game's version catalog and core module
-for you:
-
-```sh
-flxgdx add library --repo flixelgdx/flixelgdx-ui
-```
-
-It installs the newest release. The manifest that makes this work is [`flxgdx.yml`](flxgdx.yml).
-
----
-
 ## Project navigation
 
 - **[Compiling & Testing](COMPILING.md)**: How to build the extension and test it against a local copy of the framework.
