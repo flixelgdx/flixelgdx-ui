@@ -35,8 +35,8 @@ import org.flixelgdx.ui.FlixelUiRadioButton;
  *
  * <pre>{@code
  * FlixelUiRadioButtonStyle style = new FlixelUiRadioButtonStyle();
- * style.off = skin.track(new FlixelUiImage(Flixel.files.internal("ui/radio_off.png")));
- * style.on  = skin.track(new FlixelUiImage(Flixel.files.internal("ui/radio_on.png")));
+ * style.off = skin.track(FlixelUiImage.load(Flixel.files.internal("ui/radio_off.png")));
+ * style.on  = skin.track(FlixelUiImage.load(Flixel.files.internal("ui/radio_on.png")));
  * style.font = Flixel.files.internal("fonts/pixel.ttf");
  * style.fontSize = 16;
  * skin.add("default", style);
