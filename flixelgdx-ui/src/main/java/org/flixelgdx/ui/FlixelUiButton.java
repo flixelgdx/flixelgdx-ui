@@ -49,7 +49,7 @@ import org.jetbrains.annotations.Nullable;
  * those things happens and calls the matching method.
  *
  * <pre>{@code
- * FlixelUiButton play = new FlixelUiButton("Play", b -> Flixel.switchState(new PlayState()));
+ * FlixelUiButton play = new FlixelUiButton("Play", b -> Flixel.switchState(PlayState::new));
  * play.anchor(FlixelAlign.CENTER, 0, 0);
  * play.onHover.add(b -> Flixel.sound.play(Flixel.files.internal("sfx/hover.ogg")));
  * ui.add(play);

@@ -47,7 +47,7 @@ import org.jetbrains.annotations.Nullable;
  * column.setSpacing(8);
  * column.setPercentSize(1f, 1f);
  * column.add(new FlixelUiLabel("Settings"));
- * column.add(new FlixelUiButton("Back", b -> Flixel.switchState(new MenuState())));
+ * column.add(new FlixelUiButton("Back", b -> Flixel.switchState(MenuState::new)));
  *
  * panel.add(column);
  * ui.add(panel);
