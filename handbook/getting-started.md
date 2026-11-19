@@ -16,9 +16,8 @@ button to the mouse. By the end you will have a working menu, and you will know 
 
 ## What you need
 
-- A FlixelGDX game project. The project generator on the FlixelGDX website creates one for you.
-- The same version of FlixelGDX UI as your FlixelGDX version. The two are always released together with matching
-  version numbers.
+All that's needed is an existing FlixelGDX game project. The project setup wizard through the official
+IntelliJ IDEA plugin does this for you.
 
 ## Adding the dependency
 
@@ -30,7 +29,7 @@ repositories {
 }
 
 dependencies {
-  implementation "org.flixelgdx:flixelgdx-ui:<flixelgdx-version>"
+  implementation "org.flixelgdx:flixelgdx-ui:<flixelgdx-ui-version>"
 }
 ```
 
@@ -38,19 +37,20 @@ With the Kotlin DSL (`build.gradle.kts`), the line takes parentheses:
 
 ```kotlin
 dependencies {
-  implementation("org.flixelgdx:flixelgdx-ui:<flixelgdx-version>")
+  implementation("org.flixelgdx:flixelgdx-ui:<flixelgdx-ui-version>")
 }
 ```
 
-If your project uses a version catalog, point both libraries at the same version so they can never drift apart:
+If your project uses a version catalog:
 
 ```toml
 [versions]
 flixelgdx = "<flixelgdx-version>"
+flixelgdx-ui = "<flixelgdx-ui-version>"
 
 [libraries]
 flixelgdx-core = { module = "org.flixelgdx:flixelgdx-core", version.ref = "flixelgdx" }
-flixelgdx-ui = { module = "org.flixelgdx:flixelgdx-ui", version.ref = "flixelgdx" }
+flixelgdx-ui = { module = "org.flixelgdx:flixelgdx-ui", version.ref = "flixelgdx-ui" }
 ```
 
 The extension is pure Java and depends only on `flixelgdx-core`, so it works the same on desktop, in the browser, and
@@ -139,6 +139,7 @@ public class MenuState extends FlixelState {
   @Override
   public void update(float elapsed) {
     super.update(elapsed);
+    // Update the pointer's position to where the mouse is.
     pointer.move(Flixel.mouse.getWorldX(ui.getCamera()), Flixel.mouse.getWorldY(ui.getCamera()));
     if (Flixel.mouse.justPressed(FlixelMouseButton.LEFT)) {
       pointer.down();
