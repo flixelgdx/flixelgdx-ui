@@ -127,6 +127,9 @@ public final class FlixelUiRadioGroup {
    * @param radio The button to select.
    */
   public void select(@NotNull FlixelUiRadioButton radio) {
+    if (!radio.isEnabled()) {
+      return;
+    }
     select(radio, true);
   }
 
@@ -141,7 +144,7 @@ public final class FlixelUiRadioGroup {
     if (index < 0 || index >= radios.getSize()) {
       return;
     }
-    select(radios.getItems()[index], true);
+    select(radios.getItems()[index]);
   }
 
   /**
@@ -149,6 +152,9 @@ public final class FlixelUiRadioGroup {
    *
    * <p>Deselects the currently selected button first. If the new button is already selected,
    * nothing happens. Does nothing when the button is not in this group.
+   *
+   * <p>Unlike {@link #select(FlixelUiRadioButton)}, this selects disabled buttons too, so code
+   * can restore a saved choice even while that button is disabled.
    *
    * @param radio The button to select.
    * @param notify {@code true} to fire {@link FlixelUiRadioButton#onChange} on the affected
