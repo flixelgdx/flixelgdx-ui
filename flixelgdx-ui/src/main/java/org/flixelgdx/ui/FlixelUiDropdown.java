@@ -75,8 +75,8 @@ import org.jetbrains.annotations.Nullable;
  *     }
  *   }
  * }
- * if (res.isOpen() && hit == res) {
- *   int row = res.getItemAt(mx, my);
+ * if (res.isOpen()) {
+ *   int row = res.getItemAt(mx, my); // The open list is its own widget, so ask the dropdown.
  *   if (row >= 0) {
  *     res.highlight(row);      // Hover over a row: highlight it.
  *   }
