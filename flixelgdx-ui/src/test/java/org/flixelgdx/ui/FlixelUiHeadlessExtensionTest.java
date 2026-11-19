@@ -24,14 +24,14 @@
 package org.flixelgdx.ui;
 
 import org.flixelgdx.Flixel;
-import org.flixelgdx.backend.desktop.file.FlixelJvmFiles;
+import org.flixelgdx.backend.desktop.file.FlixelDesktopFiles;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 
 /**
- * Verifies that {@link FlixelUiHeadlessExtension} installs the real java.io file backend before
+ * Verifies that {@link FlixelUiHeadlessExtension} installs the real desktop file backend before
  * any test in the class runs, so later feature tests in this module can rely on {@code
  * Flixel.files} working without a windowing or rendering backend.
  */
@@ -39,7 +39,7 @@ import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 class FlixelUiHeadlessExtensionTest {
 
   @Test
-  void installsJvmFilesBackend() {
-    assertInstanceOf(FlixelJvmFiles.class, Flixel.files);
+  void installsDesktopFilesBackend() {
+    assertInstanceOf(FlixelDesktopFiles.class, Flixel.files);
   }
 }
