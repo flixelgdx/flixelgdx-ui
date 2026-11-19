@@ -16,6 +16,10 @@
   needs, styled with your own art and driven by your own input.
 </div>
 
+> [!TIP]
+> New here? The **[FlixelGDX UI Handbook](handbook/README.md)** walks you from installation to a finished menu, one
+> widget at a time.
+
 > [!NOTE]
 > The extension doesn't ship a default skin. Bring your own images and fonts, and it'll handle the rest.
 
@@ -295,6 +299,8 @@ dependencies {
 
 ## Project navigation
 
+- **[Handbook](handbook/README.md)**: A beginner-friendly guide to every widget, layout, skins, input wiring, and
+  common recipes such as pause menus and settings screens.
 - **[Compiling & Testing](COMPILING.md)**: How to build the extension and test it against a local copy of the framework.
 - **[Contributing Guide](CONTRIBUTING.md)**: Coding standards, PR requirements, and how to contribute.
 - **[Code of Conduct](CODE_OF_CONDUCT.md)**: Rules set in place for a stable open source community.
