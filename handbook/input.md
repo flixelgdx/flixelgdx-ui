@@ -72,7 +72,8 @@ None of the pointer's methods allocate, so calling them every frame is fine.
 **Touch screens and virtual cursors.** The pointer does not care where the position comes from. Pass a finger's world
 position and call `down()` and `up()` when it touches and lifts, or move a cursor sprite with a gamepad stick, pass
 its position, and call `down()` and `up()` on a face button. For a touch screen, skip the cursor icon line and call
-`pointer.reset()` when the finger lifts, so the last button does not stay highlighted.
+`pointer.reset()` right after `up()` when the finger lifts, so the last button does not stay highlighted. Calling
+`reset()` before `up()` cancels the press, so the tap would never click.
 
 **Tooltip delay.** The pointer shows a hovered widget's tooltip after `pointer.tooltipDelay` seconds (`0.4` by
 default; `0` shows it at once). Tooltips do not pop up while something is held down.
@@ -234,8 +235,8 @@ decoration to let clicks fall through. Each widget guide shows the extra calls t
 - **Calling `down()` before `move(...)`.** The pointer presses whatever was under the previous position. Call
   `move(...)` first every frame.
 - **Passing screen coordinates.** Use `Flixel.mouse.getWorldX(ui.getCamera())`, not the raw window position.
-- **Buttons stay highlighted after a touch.** There is no hover on a touch screen; call `pointer.reset()` when the
-  finger lifts.
+- **Buttons stay highlighted after a touch.** There is no hover on a touch screen; call `pointer.reset()` right after
+  `up()` when the finger lifts.
 - **Word selection never happens.** Pass a click count to `pointer.down(clicks)`; plain `down()` always counts as one.
 - **The player shoots when clicking a menu button.** Check `pointer.getHovered() == null` before world clicks.
 

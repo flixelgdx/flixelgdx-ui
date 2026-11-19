@@ -177,10 +177,17 @@ are always axis-aligned and nest by overlapping, up to `FlixelUiDisplay.MAX_CLIP
 ## Preferred size and auto-size
 
 Labels, buttons, checkboxes, radio buttons, and pictures size themselves to their content by default (a button is its
-padding plus its text and icon, never smaller than its background's minimum size). Giving one a size with
-`setSize(...)`, `setWidth(...)`, or `setHeight(...)` fixes that side, and the content stays aligned inside it. Each of
-these widgets has `setAutoSize(...)` to switch back. `getPreferredWidth()` and `getPreferredHeight()` report what a
-widget would like to be, which is what stacks use.
+padding plus its text and icon, never smaller than its background's minimum size). The way to fix their size differs:
+
+- **Labels and buttons:** `setSize(...)`, `setWidth(...)`, or `setHeight(...)` fixes that side, and the content stays
+  aligned inside it. `setAutoSize(true)` switches back.
+- **Pictures:** a picture made with a size, such as `new FlixelUiPicture(file, 200, 100)`, keeps it. For a picture
+  made without one, call `setAutoSize(false)` before `setSize(...)`, or the next layout pass puts the image's natural
+  size back.
+- **Checkboxes and radio buttons:** always measured from their box and label, so a `setSize(...)` call is overwritten
+  on the next layout pass, and they have no `setAutoSize(...)`. A percent size, including one across a stack, can still stretch them.
+
+`getPreferredWidth()` and `getPreferredHeight()` report what a widget would like to be, which is what stacks use.
 
 ## Showing, hiding, fading, and destroying
 

@@ -144,7 +144,10 @@ icon.setRegion(64, 0, 32, 32);
 ```
 
 - **Size.** A picture made without a size takes the natural size of its image (or region) and keeps following it
-  through `setImage(...)` and `setRegion(...)`. A picture given a size keeps that size. `setAutoSize(...)` switches.
+  through `setImage(...)` and `setRegion(...)`. A picture made with a size (the constructors that take a width and
+  height) keeps that size. To resize a picture made without one, call `setAutoSize(false)` first; a plain
+  `setSize(...)` is overwritten by the natural size on the next layout pass. `setAutoSize(true)` follows the image
+  again.
 - **Scale modes.** `FIT` (the default) scales evenly until the whole image fits, which can leave empty bars. `FILL`
   scales evenly until the widget is covered, cropping the overflow. `STRETCH` fills the widget and ignores the image's
   shape. `NONE` draws at natural size and crops.
@@ -164,6 +167,8 @@ Tint and fade a picture like any widget, with `getColor().set(...)` and `setAlph
 - **`setIcon(null)` does not compile.** Both overloads accept `null`, so cast it: `setIcon((FlixelFile) null)`.
 - **A button never shows its focused look.** Nothing focused it. Call `focus()` from your keyboard or gamepad code.
 - **Buttons in a column have different widths.** Give each `setPercentSize(1f, Float.NaN)`.
+- **A picture snaps back to its image's size after `setSize(...)`.** It is still auto-sizing. Call
+  `setAutoSize(false)` first, or create it with a size.
 - **A clickable picture ignores clicks.** Pictures are not interactive by default; set `interactive = true`.
 
 ## Check your understanding
