@@ -40,8 +40,8 @@ import org.jetbrains.annotations.Nullable;
  *
  * <pre>{@code
  * FlixelUiCheckboxStyle style = new FlixelUiCheckboxStyle();
- * style.off = skin.track(new FlixelUiImage(Flixel.files.internal("ui/check_off.png")));
- * style.on  = skin.track(new FlixelUiImage(Flixel.files.internal("ui/check_on.png")));
+ * style.off = skin.track(FlixelUiImage.load(Flixel.files.internal("ui/check_off.png")));
+ * style.on  = skin.track(FlixelUiImage.load(Flixel.files.internal("ui/check_on.png")));
  * style.font = Flixel.files.internal("fonts/pixel.ttf");
  * style.fontSize = 16;
  * style.fontColor = new FlixelColor(FlixelColor.WHITE);

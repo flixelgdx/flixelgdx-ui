@@ -73,7 +73,7 @@ import org.jetbrains.annotations.Nullable;
  * FlixelUiLabel msg = new FlixelUiLabel("Quit to menu?");
  * FlixelUiButton yes = new FlixelUiButton("Yes", b -> {
  *   confirm.close();
- *   Flixel.switchState(new MenuState());
+ *   Flixel.switchState(MenuState::new);
  * });
  * FlixelUiButton no = new FlixelUiButton("No", b -> confirm.close());
  *
@@ -91,7 +91,9 @@ import org.jetbrains.annotations.Nullable;
  * // Tween the modal in when it opens:
  * confirm.onOpen.add(m -> {
  *   m.setAlpha(0f);
- *   Flixel.tweens.tween(m, FlixelTween.TWEEN_ALPHA_FIELD, 1f, 0.15f);
+ *   FlixelTween.tween(m, new FlixelTweenSettings()
+ *       .addGoal(m::getAlpha, 1f, m::setAlpha)
+ *       .setDuration(0.15f));
  * });
  *
  * // When the player presses a "quit" button elsewhere:

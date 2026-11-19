@@ -125,6 +125,39 @@ class FlixelUiRadioButtonTest {
     assertNull(group.getSelected());
   }
 
+  @Test
+  void selectSkipsDisabledButton() {
+    FlixelUiRadioGroup group = new FlixelUiRadioGroup();
+    FlixelUiRadioButton a = new FlixelUiRadioButton("A", group);
+    FlixelUiRadioButton b = new FlixelUiRadioButton("B", group);
+    group.select(a);
+    b.setEnabled(false);
+    group.select(b);
+    assertTrue(a.isSelected());
+    assertFalse(b.isSelected());
+    assertSame(a, group.getSelected());
+  }
+
+  @Test
+  void selectByIndexSkipsDisabledButton() {
+    FlixelUiRadioGroup group = new FlixelUiRadioGroup();
+    FlixelUiRadioButton a = new FlixelUiRadioButton("A", group);
+    a.setEnabled(false);
+    group.select(0);
+    assertFalse(a.isSelected());
+    assertNull(group.getSelected());
+  }
+
+  @Test
+  void selectWithNotifyFlagStillSelectsDisabledButton() {
+    FlixelUiRadioGroup group = new FlixelUiRadioGroup();
+    FlixelUiRadioButton a = new FlixelUiRadioButton("A", group);
+    a.setEnabled(false);
+    group.select(a, false);
+    assertTrue(a.isSelected());
+    assertSame(a, group.getSelected());
+  }
+
   // --- clearSelection ---
 
   @Test
