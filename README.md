@@ -6,7 +6,7 @@
   [![Maven Central](https://img.shields.io/maven-central/v/org.flixelgdx/flixelgdx-ui)](https://central.sonatype.com/artifact/org.flixelgdx/flixelgdx-ui)
   [![JitPack](https://jitpack.io/v/flixelgdx/flixelgdx-ui.svg)](https://jitpack.io/#flixelgdx/flixelgdx-ui)
   [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-  [![FlixelGDX 0.7.0](https://img.shields.io/badge/FlixelGDX-0.7.0-red)](https://github.com/flixelgdx/flixelgdx)
+  [![FlixelGDX 0.7.2](https://img.shields.io/badge/FlixelGDX-0.7.2-red)](https://github.com/flixelgdx/flixelgdx)
   [![Java 25+](https://img.shields.io/badge/Java-25%2B-orange)](https://adoptium.net/temurin/releases?version=25&os=any&arch=any)
 
   FlixelGDX UI is a flexible, comprehensive UI extension for the game framework [FlixelGDX](https://github.com/flixelgdx/flixelgdx).
@@ -15,6 +15,10 @@
   Panels, modals, buttons, checkboxes, radio buttons, dropdowns, sliders, pictures, text boxes, tooltips — everything a menu or HUD
   needs, styled with your own art and driven by your own input.
 </div>
+
+> [!TIP]
+> New here? The **[FlixelGDX UI Handbook](handbook/README.md)** walks you from installation to a finished menu, one
+> widget at a time.
 
 > [!NOTE]
 > The extension doesn't ship a default skin. Bring your own images and fonts, and it'll handle the rest.
@@ -295,6 +299,8 @@ dependencies {
 
 ## Project navigation
 
+- **[Handbook](handbook/README.md)**: A beginner-friendly guide to every widget, layout, skins, input wiring, and
+  common recipes such as pause menus and settings screens.
 - **[Compiling & Testing](COMPILING.md)**: How to build the extension and test it against a local copy of the framework.
 - **[Contributing Guide](CONTRIBUTING.md)**: Coding standards, PR requirements, and how to contribute.
 - **[Code of Conduct](CODE_OF_CONDUCT.md)**: Rules set in place for a stable open source community.
