@@ -819,7 +819,7 @@ public class FlixelTextBox extends FlixelUiWidget implements FlixelKeyboardListe
    *
    * <pre>{@code
    * // Scroll down one line with the mouse wheel.
-   * notes.scroll(Flixel.mouse.wheel);
+   * notes.scroll(Flixel.mouse.getScrollDeltaY());
    * }</pre>
    *
    * @param lines Number of lines to scroll; negative scrolls up, positive scrolls down.
