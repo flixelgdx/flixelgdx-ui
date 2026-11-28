@@ -220,4 +220,18 @@ class FlixelUiAccessorsTest {
     ui.setTooltipStyle("big");
     assertEquals("big", ui.getTooltipStyle());
   }
+
+  @Test
+  void alphaReadsBackAndIsClamped() {
+    TestWidget widget = new TestWidget(10, 10);
+    widget.setAlpha(0.25f);
+    assertEquals(0.25f, widget.getAlpha(), EPS);
+    assertEquals(0.25f, widget.getColor().getAlpha(), EPS);
+
+    widget.setAlpha(2f);
+    assertEquals(1f, widget.getAlpha(), EPS);
+
+    widget.setAlpha(-1f);
+    assertEquals(0f, widget.getAlpha(), EPS);
+  }
 }

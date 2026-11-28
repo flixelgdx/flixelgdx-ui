@@ -49,7 +49,7 @@ public class ColorSwatch extends FlixelUiWidget {
   @Override
   protected void drawSelf(@NotNull FlixelBatch batch, float drawX, float drawY, float alpha) {
     FlixelColor tint = getColor();
-    batch.setColor(tint.r, tint.g, tint.b, alpha);
+    batch.setColor(tint.getRed(), tint.getGreen(), tint.getBlue(), alpha);
     fill.draw(batch, drawX, drawY, width, height);
     batch.setColor(FlixelColor.WHITE);
   }
@@ -96,7 +96,7 @@ public class ProgressBar extends FlixelUiWidget {
       return;
     }
     FlixelColor tint = getColor();
-    batch.setColor(tint.r, tint.g, tint.b, alpha);
+    batch.setColor(tint.getRed(), tint.getGreen(), tint.getBlue(), alpha);
     if (s.track != null) {
       s.track.draw(batch, drawX, drawY, width, height);
     }

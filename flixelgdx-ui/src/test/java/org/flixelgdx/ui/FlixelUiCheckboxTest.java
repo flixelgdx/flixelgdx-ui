@@ -302,8 +302,8 @@ class FlixelUiCheckboxTest {
     cb.setSize(100, 20);
     batch.reset();
     cb.drawSelf(batch, 0, 0, 1f);
-    assertEquals(1f, batch.getColor().r, EPS);
-    assertEquals(1f, batch.getColor().a, EPS);
+    assertEquals(1f, batch.getColor().getRed(), EPS);
+    assertEquals(1f, batch.getColor().getAlpha(), EPS);
   }
 
   // --- alpha multiplied ---

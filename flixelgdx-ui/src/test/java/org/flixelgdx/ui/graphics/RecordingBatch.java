@@ -69,10 +69,10 @@ public final class RecordingBatch implements FlixelBatch {
     ys[count] = y;
     widths[count] = width;
     heights[count] = height;
-    colors[count * 4] = color.r;
-    colors[count * 4 + 1] = color.g;
-    colors[count * 4 + 2] = color.b;
-    colors[count * 4 + 3] = color.a;
+    colors[count * 4] = color.getRed();
+    colors[count * 4 + 1] = color.getGreen();
+    colors[count * 4 + 2] = color.getBlue();
+    colors[count * 4 + 3] = color.getAlpha();
     count++;
   }
 

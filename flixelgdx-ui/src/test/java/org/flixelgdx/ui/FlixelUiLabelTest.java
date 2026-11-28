@@ -190,7 +190,7 @@ class FlixelUiLabelTest {
       assertEquals(1f, batch.getRed(0), EPS);
       assertEquals(0.5f, batch.getAlpha(0), EPS);
       assertEquals(1f, label.getPart().getText().getAlpha(), EPS, "the text's own alpha is restored");
-      assertEquals(1f, batch.getColor().a, EPS, "the batch color is back to white");
+      assertEquals(1f, batch.getColor().getAlpha(), EPS, "the batch color is back to white");
     } finally {
       Flixel.cameras.clear();
     }
