@@ -120,7 +120,7 @@ abstract class FlixelUiAbstractToggle extends FlixelUiWidget {
     float bh = computeBoxHeight(bg);
     float boxTop = drawY + (height - bh) * 0.5f;
     if (bg != null) {
-      batch.setColor(tint.r, tint.g, tint.b, alpha);
+      batch.setColor(tint.getRed(), tint.getGreen(), tint.getBlue(), alpha);
       bg.draw(batch, drawX, boxTop, bw, bh);
       batch.setColor(FlixelColor.WHITE);
     }

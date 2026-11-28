@@ -179,7 +179,7 @@ public class FlixelUiModal extends FlixelUiPanel {
       FlixelColor tint = getColor();
       float bdX = d != null ? d.toDrawX(0f) : 0f;
       float bdY = d != null ? d.toDrawY(0f) : 0f;
-      batch.setColor(tint.r, tint.g, tint.b, alpha);
+      batch.setColor(tint.getRed(), tint.getGreen(), tint.getBlue(), alpha);
       bd.draw(batch, bdX, bdY, dispW, dispH);
       batch.setColor(FlixelColor.WHITE);
     }

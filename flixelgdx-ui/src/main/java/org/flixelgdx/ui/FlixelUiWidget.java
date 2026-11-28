@@ -284,7 +284,7 @@ public abstract class FlixelUiWidget implements IFlixelBasic, FlixelPositional, 
     if (!exists || !visible) {
       return;
     }
-    float alpha = parentAlpha * color.a;
+    float alpha = parentAlpha * color.getAlpha();
     if (alpha <= 0f) {
       return;
     }
@@ -1027,9 +1027,9 @@ public abstract class FlixelUiWidget implements IFlixelBasic, FlixelPositional, 
    * @return The combined alpha, from {@code 0} to {@code 1} for alphas in that range.
    */
   public float getWorldAlpha() {
-    float a = color.a;
+    float a = color.getAlpha();
     for (FlixelUiContainer p = parent; p != null; p = p.parent) {
-      a *= p.getColor().a;
+      a *= p.getColor().getAlpha();
     }
     return a;
   }
@@ -1321,11 +1321,18 @@ public abstract class FlixelUiWidget implements IFlixelBasic, FlixelPositional, 
   }
 
   public float getAlpha() {
-    return color.a;
+    return color.getAlpha();
   }
 
+  /**
+   * Sets this widget's own opacity, which multiplies with every parent's opacity when it draws.
+   *
+   * <p>The value is clamped between {@code 0} (invisible) and {@code 1} (fully opaque).
+   *
+   * @param alpha The new opacity, from {@code 0} to {@code 1}.
+   */
   public void setAlpha(float alpha) {
-    color.a = alpha;
+    color.setAlpha(alpha);
   }
 
   /**

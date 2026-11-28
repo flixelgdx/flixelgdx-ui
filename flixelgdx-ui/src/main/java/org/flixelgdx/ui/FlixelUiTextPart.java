@@ -167,7 +167,8 @@ final class FlixelUiTextPart {
     float sy = d != null ? d.toSpriteY(screenY) : screenY;
     text.setPosition(sx, sy);
     FlixelColor c = color;
-    text.setColor(c.r * tint.r, c.g * tint.g, c.b * tint.b, c.a * alpha);
+    text.setColor(c.getRed() * tint.getRed(), c.getGreen() * tint.getGreen(), c.getBlue() * tint.getBlue(),
+        c.getAlpha() * alpha);
     try {
       text.draw(batch);
     } finally {

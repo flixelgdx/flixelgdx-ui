@@ -317,7 +317,7 @@ public class FlixelTextBox extends FlixelUiWidget implements FlixelKeyboardListe
 
     FlixelUiBackground bg = resolveBackground(s);
     if (bg != null) {
-      batch.setColor(tint.r, tint.g, tint.b, alpha);
+      batch.setColor(tint.getRed(), tint.getGreen(), tint.getBlue(), alpha);
       bg.draw(batch, drawX, drawY, width, height);
       batch.setColor(FlixelColor.WHITE);
     }
@@ -1255,7 +1255,8 @@ public class FlixelTextBox extends FlixelUiWidget implements FlixelKeyboardListe
     float spriteX = d != null ? d.toSpriteX(textSX) : textSX;
     float spriteY = d != null ? d.toSpriteY(textSY) : textSY;
     t.setPosition(spriteX, spriteY);
-    t.setColor(base.r * tint.r, base.g * tint.g, base.b * tint.b, base.a * alpha);
+    t.setColor(base.getRed() * tint.getRed(), base.getGreen() * tint.getGreen(), base.getBlue() * tint.getBlue(),
+        base.getAlpha() * alpha);
     try {
       t.draw(batch);
     } finally {
@@ -1278,7 +1279,7 @@ public class FlixelTextBox extends FlixelUiWidget implements FlixelKeyboardListe
     int selStart = model.getSelectionStart();
     int selEnd = model.getSelectionEnd();
     int lineCount = text.getLineCount();
-    batch.setColor(tint.r, tint.g, tint.b, alpha);
+    batch.setColor(tint.getRed(), tint.getGreen(), tint.getBlue(), alpha);
     for (int ln = 0; ln < lineCount; ln++) {
       int lnStart = text.getLineStart(ln);
       int lnEnd = text.getLineEnd(ln);
@@ -1313,7 +1314,7 @@ public class FlixelTextBox extends FlixelUiWidget implements FlixelKeyboardListe
     float caretW = Math.max(1f, s.caretWidth);
     float cx = textSX + caretLocalX - caretW * 0.5f;
     float cy = textSY + caretLocalY;
-    batch.setColor(tint.r, tint.g, tint.b, alpha);
+    batch.setColor(tint.getRed(), tint.getGreen(), tint.getBlue(), alpha);
     s.caret.draw(batch, cx, cy, caretW, lineH);
     batch.setColor(FlixelColor.WHITE);
   }

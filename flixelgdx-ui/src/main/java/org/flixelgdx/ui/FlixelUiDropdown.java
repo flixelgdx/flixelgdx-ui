@@ -220,7 +220,7 @@ public class FlixelUiDropdown extends FlixelUiWidget {
 
     FlixelUiBackground bg = getBackground();
     if (bg != null) {
-      batch.setColor(tint.r, tint.g, tint.b, alpha);
+      batch.setColor(tint.getRed(), tint.getGreen(), tint.getBlue(), alpha);
       bg.draw(batch, drawX, drawY, width, height);
       batch.setColor(FlixelColor.WHITE);
     }
@@ -236,7 +236,7 @@ public class FlixelUiDropdown extends FlixelUiWidget {
       float ah = FlixelUiBgSize.height(arrow);
       float ax = drawX + width - s.padRight - aw;
       float ay = drawY + (height - ah) * 0.5f;
-      batch.setColor(tint.r, tint.g, tint.b, alpha);
+      batch.setColor(tint.getRed(), tint.getGreen(), tint.getBlue(), alpha);
       arrow.draw(batch, ax, ay, aw, ah);
       batch.setColor(FlixelColor.WHITE);
     }
