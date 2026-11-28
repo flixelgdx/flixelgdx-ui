@@ -1477,7 +1477,7 @@ public class FlixelTextBox extends FlixelUiWidget implements FlixelKeyboardListe
       return;
     }
     FlixelTextBox self = this;
-    Flixel.graphics.queueMainThread(() -> {
+    Flixel.runtime.queueMainThread(() -> {
       if (self.isFocused() && self.isEnabled()) {
         if (self.model.insert(pastedText)) {
           self.afterEdit();
