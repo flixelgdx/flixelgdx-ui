@@ -45,7 +45,7 @@ import org.jetbrains.annotations.Nullable;
  * backdrop.draw(batch, 0, 0, screenWidth, screenHeight);
  *
  * // Change the color later without making a new object.
- * backdrop.getColor().a = 0.8f;
+ * backdrop.getColor().setAlpha(0.8f);
  * }</pre>
  *
  * <p>It draws with the framework's shared 1x1 white pixel, which is obtained the first time the
@@ -112,7 +112,8 @@ public final class FlixelUiColorFill implements FlixelUiBackground {
       pixel = px;
     }
     FlixelColor s = saved.set(batch.getColor());
-    batch.setColor(s.r * color.r, s.g * color.g, s.b * color.b, s.a * color.a);
+    batch.setColor(s.getRed() * color.getRed(), s.getGreen() * color.getGreen(), s.getBlue() * color.getBlue(),
+        s.getAlpha() * color.getAlpha());
     batch.draw(px, x, y, width, height);
     batch.setColor(s);
   }

@@ -128,10 +128,10 @@ class FlixelUiImageAndFillTest {
     assertEquals(1, batch.frames[0].getRegionHeight());
 
     FlixelColor after = batch.getColor();
-    assertEquals(0.5f, after.r, EPS);
-    assertEquals(1f, after.g, EPS);
-    assertEquals(1f, after.b, EPS);
-    assertEquals(0.5f, after.a, EPS);
+    assertEquals(0.5f, after.getRed(), EPS);
+    assertEquals(1f, after.getGreen(), EPS);
+    assertEquals(1f, after.getBlue(), EPS);
+    assertEquals(0.5f, after.getAlpha(), EPS);
 
     fill.draw(batch, 0, 0, 1, 1);
     assertSame(batch.frames[0], batch.frames[1], "the white pixel is obtained once and reused");
@@ -141,10 +141,10 @@ class FlixelUiImageAndFillTest {
   void colorFillOwnsACopyOfItsColor() {
     FlixelColor source = new FlixelColor(0f, 0f, 0f, 0.6f);
     FlixelUiColorFill fill = new FlixelUiColorFill(source);
-    source.a = 1f;
-    assertEquals(0.6f, fill.getColor().a, EPS);
+    source.setAlpha(1f);
+    assertEquals(0.6f, fill.getColor().getAlpha(), EPS);
     fill.setColor(FlixelColor.RED);
-    assertEquals(1f, fill.getColor().r, EPS);
+    assertEquals(1f, fill.getColor().getRed(), EPS);
     assertEquals(0f, fill.getMinWidth(), EPS);
     assertEquals(0f, fill.getMinHeight(), EPS);
     assertThrows(IllegalArgumentException.class, () -> new FlixelUiColorFill(null));

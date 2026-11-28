@@ -229,8 +229,8 @@ class FlixelUiButtonTest {
     assertEquals(20f, batch.getWidth(1), EPS);
     assertEquals(10f, batch.getHeight(1), EPS);
     assertEquals(0.5f, batch.getAlpha(1), EPS);
-    assertEquals(1f, batch.getColor().r, EPS, "the batch color is restored to white");
-    assertEquals(1f, batch.getColor().a, EPS);
+    assertEquals(1f, batch.getColor().getRed(), EPS, "the batch color is restored to white");
+    assertEquals(1f, batch.getColor().getAlpha(), EPS);
 
     button.press();
     batch.reset();

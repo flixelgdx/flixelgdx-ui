@@ -215,7 +215,7 @@ public class FlixelUiPicture extends FlixelUiWidget {
       return;
     }
     FlixelColor tint = getColor();
-    batch.setColor(tint.r, tint.g, tint.b, alpha);
+    batch.setColor(tint.getRed(), tint.getGreen(), tint.getBlue(), alpha);
     shown.draw(batch, drawX + imageX, drawY + imageY, imageW, imageH);
     batch.setColor(FlixelColor.WHITE);
     if (overflow) {

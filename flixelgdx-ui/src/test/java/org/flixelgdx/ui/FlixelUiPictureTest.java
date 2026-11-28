@@ -193,7 +193,7 @@ class FlixelUiPictureTest {
   void drawUsesTheTintAndTheLayoutRectangle() {
     FlixelUiPicture p = picture(ScaleMode.FIT);
     p.setPosition(10, 20);
-    p.getColor().r = 0.5f;
+    p.getColor().setRed(0.5f);
     p.setAlpha(0.5f);
     FlixelFrame frame = p.getImage().getFrame();
     ui.add(p);

@@ -46,7 +46,7 @@ import org.jetbrains.annotations.NotNull;
  * <pre>{@code
  * // Inside a widget's drawSelf(...):
  * FlixelColor tint = getColor();
- * batch.setColor(tint.r, tint.g, tint.b, alpha);
+ * batch.setColor(tint.getRed(), tint.getGreen(), tint.getBlue(), alpha);
  * style.background.draw(batch, drawX, drawY, getWidth(), getHeight());
  * batch.setColor(FlixelColor.WHITE);
  * }</pre>

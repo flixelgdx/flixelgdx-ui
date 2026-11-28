@@ -148,7 +148,7 @@ public class FlixelUiTooltip extends FlixelUiWidget {
     FlixelUiBackground bg = s != null ? s.background : null;
     FlixelColor tint = getColor();
     if (bg != null) {
-      batch.setColor(tint.r, tint.g, tint.b, alpha);
+      batch.setColor(tint.getRed(), tint.getGreen(), tint.getBlue(), alpha);
       bg.draw(batch, drawX, drawY, width, height);
       batch.setColor(FlixelColor.WHITE);
     }

@@ -149,7 +149,7 @@ final class FlixelUiDropdownList extends FlixelUiWidget {
 
     FlixelUiBackground listBg = s != null ? s.listBackground : null;
     if (listBg != null) {
-      batch.setColor(tint.r, tint.g, tint.b, alpha);
+      batch.setColor(tint.getRed(), tint.getGreen(), tint.getBlue(), alpha);
       listBg.draw(batch, drawX, drawY, width, height);
       batch.setColor(FlixelColor.WHITE);
     }
@@ -184,7 +184,7 @@ final class FlixelUiDropdownList extends FlixelUiWidget {
           rowBg = s.itemHighlight;
         }
         if (rowBg != null) {
-          batch.setColor(tint.r, tint.g, tint.b, alpha);
+          batch.setColor(tint.getRed(), tint.getGreen(), tint.getBlue(), alpha);
           rowBg.draw(batch, drawX, rowDrawY, width, rowH);
           batch.setColor(FlixelColor.WHITE);
         }

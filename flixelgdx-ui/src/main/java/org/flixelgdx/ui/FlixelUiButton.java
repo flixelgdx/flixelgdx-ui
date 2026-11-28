@@ -327,7 +327,7 @@ public class FlixelUiButton extends FlixelUiWidget {
     FlixelColor tint = getColor();
     FlixelUiBackground bg = getBackground();
     if (bg != null) {
-      batch.setColor(tint.r, tint.g, tint.b, alpha);
+      batch.setColor(tint.getRed(), tint.getGreen(), tint.getBlue(), alpha);
       bg.draw(batch, drawX, drawY, width, height);
       batch.setColor(FlixelColor.WHITE);
     }
@@ -348,7 +348,7 @@ public class FlixelUiButton extends FlixelUiWidget {
     if (img != null) {
       float iw = img.getNaturalWidth();
       float ih = img.getNaturalHeight();
-      batch.setColor(tint.r, tint.g, tint.b, alpha);
+      batch.setColor(tint.getRed(), tint.getGreen(), tint.getBlue(), alpha);
       img.draw(batch, drawX + left, drawY + top + (contentH - ih) * 0.5f, iw, ih);
       batch.setColor(FlixelColor.WHITE);
       textLeft += iw + (part.isEmpty() ? 0f : getIconSpacing());

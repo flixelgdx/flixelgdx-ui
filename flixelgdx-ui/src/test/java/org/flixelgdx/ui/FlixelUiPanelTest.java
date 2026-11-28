@@ -84,7 +84,7 @@ class FlixelUiPanelTest {
     assertEquals(100f, batch.getWidth(0), EPS);
     assertEquals(50f, batch.getHeight(0), EPS);
     assertEquals(0.5f, batch.getAlpha(0), EPS);
-    assertEquals(1f, batch.getColor().a, EPS, "the batch color is restored");
+    assertEquals(1f, batch.getColor().getAlpha(), EPS, "the batch color is restored");
 
     style.background = null;
     batch.reset();

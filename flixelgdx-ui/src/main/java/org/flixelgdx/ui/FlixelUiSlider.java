@@ -197,7 +197,7 @@ public class FlixelUiSlider extends FlixelUiWidget {
       return;
     }
     FlixelColor tint = getColor();
-    batch.setColor(tint.r, tint.g, tint.b, alpha);
+    batch.setColor(tint.getRed(), tint.getGreen(), tint.getBlue(), alpha);
     float thickness = s.trackThickness > 0f ? s.trackThickness : (vertical ? width : height);
     float thumbLen = vertical ? s.thumbHeight : s.thumbWidth;
     float offset = getThumbOffset();
